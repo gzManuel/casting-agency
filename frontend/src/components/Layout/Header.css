@@ -40,6 +40,11 @@
     color: white;
     margin-right: 10px;
 }
+.item__login:hover{ 
+    background-color: #cac8c8;
+    color: black;
+}
+
 .item__signup{
     padding: 9px 10px;
     border: none;
@@ -47,4 +52,8 @@
     font-size: 16px;
     background-color: #008CBA;
     color: black;
+}
+
+.item__signup:hover{
+    background-color: turquoise;
 }
