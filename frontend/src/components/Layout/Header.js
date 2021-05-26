@@ -1,8 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Header.css';
+import { useAuth0 } from '@auth0/auth0-react';
+import UserInfo from './UserInfo';
 
 const Header = () => {
+    //This constants always are going to be reset after refresh
+    const { loginWithRedirect , logout, getAccessTokenSilently } = useAuth0();
+    const { isAuthenticated, isLoading, user } = useAuth0();
+
+    const [name, setName] = useState();
+    const [picture, setPicture] = useState();
+    const [authenticated, setAuthenticated] = useState();
+
+    const setLocalStoreHandler = (token) => {
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+        console.log(user);
+        console.log(token);
+    }
+
+    const onLogoutHandler = () => {
+        logout();
+        localStorage.clear();
+    }
     
+
+    useEffect(() => {
+        //Checking if there're data saving in localstorage.
+        // console.log(localStorage.getItem('token'));
+        console.log(user);
+        if (localStorage.length !== 0) {
+            
+            //Transforming String to object
+            const user = JSON.parse(localStorage.getItem('user'));
+            //Setting the Name picture and authenticated
+            setName(user.name);
+            setPicture(user.picture);
+            setAuthenticated(true);
+        }
+    }, []);
+
+    if(isAuthenticated){
+        getAccessTokenSilently().then(token=>setLocalStoreHandler(token)); 
+    }
+
+    if (isLoading) {
+        //Show loading animation.
+        return (<div>Loading...</div>);
+    }
+ 
     return (
         <header className='header' >
 
@@ -10,24 +56,11 @@ const Header = () => {
                 <h2 className='item__logo'>Casting agencies</h2>
             </div>
 
-            <div className='item-push-left'>
-                <img className='item__user-image' src='https://www.latercera.com/resizer/QbgnEdZ9esJYiZwFPx1EgF-6xFA=/380x570/smart/arc-anglerfish-arc2-prod-copesa.s3.amazonaws.com/public/HCZX4NCJLNGQPJ4WH74GGWZZ6E.jpg' alt='naruto'/>
-            </div>
+            {(authenticated||isAuthenticated) && (<UserInfo name={authenticated? name:user.name } picture={authenticated?picture:user.picture} />)}
 
             <div className='item'>
-                <ul className='item__user-info'>
-                    <li >
-                        Name: Manuel
-                    </li>
-                    <li>
-                        Access: Boss
-                    </li>
-                </ul>
-            </div>
-
-            <div className='item'>
-                <button className='item__login'>Login</button>
-                <button className='item__signup'>Sign up</button>
+                {authenticated ||isAuthenticated ? <button onClick={onLogoutHandler} className='item__logout'>Logout</button> :
+                    <button onClick={loginWithRedirect} className='item__login'>Login</button>}
             </div>
         </header>
     );

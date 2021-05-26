@@ -36,24 +36,26 @@
     border: none;
     text-decoration: none;
     font-size: 16px;
-    background-color: #555555;
+    background-color: #008CBA;
     color: white;
     margin-right: 10px;
 }
 .item__login:hover{ 
-    background-color: #cac8c8;
+    background-color: #3dcfff;
     color: black;
 }
 
-.item__signup{
+.item__logout{
     padding: 9px 10px;
     border: none;
     text-decoration: none;
     font-size: 16px;
-    background-color: #008CBA;
-    color: black;
+    background-color: #555555;
+    color: white;
+    margin-right: 10px;
 }
 
-.item__signup:hover{
-    background-color: turquoise;
+.item__logout:hover{ 
+    background-color: #cac8c8;
+    color: black;
 }
