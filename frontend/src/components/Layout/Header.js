@@ -15,8 +15,6 @@ const Header = () => {
     const setLocalStoreHandler = (token) => {
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(user));
-        console.log(user);
-        console.log(token);
     }
 
     const onLogoutHandler = () => {
@@ -27,8 +25,6 @@ const Header = () => {
 
     useEffect(() => {
         //Checking if there're data saving in localstorage.
-        // console.log(localStorage.getItem('token'));
-        console.log(user);
         if (localStorage.length !== 0) {
             
             //Transforming String to object

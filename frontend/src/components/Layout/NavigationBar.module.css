@@ -1,0 +1,22 @@
+.nav__list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    
+    font-size: 20px;
+    
+}
+li a{
+    color: white;
+    text-decoration: none;
+    padding: 20px;
+    display: block;
+}
+
+a:hover{
+    color: #008CBA;
+}
+
+.active{
+    color: #008CBA;
+}

@@ -1,0 +1,14 @@
+.wrapper{
+    background-color: rgb(95, 95, 95);
+}
+
+.main{
+    width: 75%;
+    margin: auto;
+    display: flex;
+}
+
+.main__welcome{
+    text-align: center;
+    margin: 0;
+}

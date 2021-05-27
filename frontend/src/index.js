@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Auth0Provider } from '@auth0/auth0-react';
-
+import {BrowserRouter } from 'react-router-dom';
 ReactDOM.render(
   <Auth0Provider
     domain="casting-agency-bo.us.auth0.com"
@@ -13,7 +13,9 @@ ReactDOM.render(
     scope='read:current_user read:roles read:users'
     redirectUri={window.location.origin}>
     <React.StrictMode>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </React.StrictMode>
   </Auth0Provider>,
   document.getElementById('root')

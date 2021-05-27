@@ -13,6 +13,9 @@ const UserInfo = (props) => {
                 <li >
                     Name:{props.name}
                 </li>
+                <li>
+                    Access:{props.access}
+                </li>
             </ul>
         </div>
     </Fragment>)
