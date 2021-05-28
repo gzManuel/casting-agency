@@ -12,7 +12,7 @@ const NavigationBar = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to='Movies' activeClassName={classes.active}>
+                    <NavLink to='/movies' activeClassName={classes.active}>
                         Movies
                     </NavLink>
                 </li>
