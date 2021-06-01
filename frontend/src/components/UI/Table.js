@@ -4,7 +4,7 @@ import classes from './Table.module.css';
 const Table = (props) => {
     //props.tableHeader = ['Id','Name','Gender']
     const tableHeader = props.tableHeader.map(column => {
-        return <th>{column}</th>;
+        return <th key={column}>{column}</th>;
     });
 
     /*props.tableData = [{
@@ -17,9 +17,10 @@ const Table = (props) => {
         column2:'',
         column3:'']
     }*/
+        
     const tableData = props.tableData.map(row => {
         return (
-            <tr>
+            <tr key={row.column1}>
                 <td>
                     {row.column1}
                 </td>
