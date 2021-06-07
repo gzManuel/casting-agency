@@ -17,29 +17,30 @@ const Table = (props) => {
         column2:'',
         column3:'']
     }*/
-        
+
     const tableData = props.tableData.map(row => {
+        // const rowData = row.map(column => {
+        //     return <td>{column}</td>;
+        // })
+
+        let rowData = [];
+        for (var column in row) {
+            rowData.push(<td key={row[column]}>{row[column]}</td>);
+        }
+
         return (
             <tr key={row.column1}>
-                <td>
-                    {row.column1}
-                </td>
-                <td>
-                    {row.column2}
-                </td>
-                <td>
-                    {row.column3}
-                </td>
+                {rowData}
             </tr>
         );
-    })
+    });
 
     return (
+
         <table className={classes.table}>
             <thead>
                 <tr>
                     {tableHeader}
-
                 </tr>
             </thead>
             <tbody>

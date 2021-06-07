@@ -1,12 +1,34 @@
-import { useState } from 'react/cjs/react.development';
+import { useState } from 'react';
 
 const FormActor = (props) => {
     const [name,setName] = useState('');
-    const [gender,setGender] = useState('Female');
+    const [gender,setGender] = useState('Male');
 
-    const addActorHandler = (event) => {
+    //Async method to make it easier to utilize promises.
+    const addActorHandler = async (event) => {
+        const actor = {
+            name,
+            gender
+        }
         event.preventDefault();
-        
+        const response = await fetch('http://localhost:5000/actors',
+        {
+            method:'Post',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            // Always uttilize JSON.stringify to convert in string an object or json.
+            body:JSON.stringify(actor)
+        });
+        //The response will be a json.
+        const data = await response.json();
+
+        //success
+        if(data.success){
+            //update
+            setName('');
+            setGender('Male');
+        }
     }
 
     return (
