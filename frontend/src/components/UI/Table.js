@@ -29,24 +29,23 @@ const Table = (props) => {
         }
 
         return (
-            <tr key={row.column1}>
+            <tr key={row.column1} onDoubleClick={function(){console.log('Hello World')}} >
                 {rowData}
             </tr>
         );
     });
 
     return (
-
-        <table className={classes.table}>
-            <thead>
-                <tr>
-                    {tableHeader}
-                </tr>
-            </thead>
-            <tbody>
-                {tableData}
-            </tbody>
-        </table>
+            <table className={classes.table}>
+                <thead>
+                    <tr>
+                        {tableHeader}
+                    </tr>
+                </thead>
+                <tbody >
+                    {tableData}
+                </tbody>
+            </table>
     );
 };
 

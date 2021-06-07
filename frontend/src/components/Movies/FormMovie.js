@@ -6,6 +6,7 @@ const FormMovie = () => {
     const [releaseDate, setReleaseDate] = useState('');
 
     const addMovieHandler = async (event) => {
+        event.preventDefault();
         const movie = {
             title,
             release_date: releaseDate
@@ -25,7 +26,7 @@ const FormMovie = () => {
             setTitle('');
             setReleaseDate('');
         }
-        event.preventDefault();
+        
 
     }
 
