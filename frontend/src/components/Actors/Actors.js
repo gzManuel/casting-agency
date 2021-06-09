@@ -2,8 +2,9 @@ import classes from './Actors.module.css';
 import Table from '../UI/Table';
 import Modal from '../UI/Modal';
 import FormActor from './FormActor';
-import { useCallback, useEffect, useState } from 'react';
 import Actor from './Actor';
+import { useCallback, useEffect, useState } from 'react';
+
 
 const Actors = (props) => {
     const [showForm, setShowForm] = useState(false);

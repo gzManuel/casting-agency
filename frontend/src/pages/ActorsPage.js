@@ -1,12 +1,11 @@
-import { Fragment } from 'react';
+import { act } from 'react-dom/cjs/react-dom-test-utils.production.min';
 import Actors from '../components/Actors/Actors';
+import { getAllActors } from '../lib/api';
 
+const ActorsPage = () => {
 
-const ActorsPage = (props) => {
     return (
-        <Fragment>
-            <Actors />
-        </Fragment>
+        <Actors />
     );
 };
 
