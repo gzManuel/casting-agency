@@ -3,7 +3,6 @@ import Header from './Header';
 import NavigationBar from './NavigationBar';
 import './Layout.css';
 import Main from "./Main";
-import { Route } from 'react-router-dom';
 
 const Layout = (props) => {
 
@@ -12,15 +11,7 @@ const Layout = (props) => {
         <Fragment>
             <Header />
             <Main>
-                <div>
-                    <NavigationBar />
-                    <Route path='/actors'>
-                        {props.formActor}
-                    </Route>
-                    <Route path='/movies'>
-                        {props.formMovie}
-                    </Route>
-                </div>
+                <NavigationBar />
                 {props.children}
             </Main>
             <footer className='footer'>

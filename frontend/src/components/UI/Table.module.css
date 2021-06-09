@@ -1,6 +1,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
+  color: white;
 }
 th {
   background-color: black;
@@ -9,12 +10,16 @@ th {
 
 td,
 th {
-  border: 1px solid #dddddd;
+  /* border: 1px solid #736b5e; */
+  border-color: #736b5e;
   text-align: left;
   padding: 8px;
 }
 tr:nth-child(even) {
-  background-color: #dddddd;
+  /* background-color: #dddddd; */
+  /* background-color: rgb(43, 47, 49); */
+  background-color: rgb(35, 38, 39);
+
 }
 
 tbody tr:hover{

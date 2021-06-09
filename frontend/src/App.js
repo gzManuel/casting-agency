@@ -3,16 +3,13 @@ import Layout from './components/Layout/Layout';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import ActorsPage from './pages/ActorsPage';
 import MoviesPage from './pages/MoviesPage';
-import FormActor from './components/Actors/FormActor';
-import FormMovie from './components/Movies/FormMovie';
 
 function App() {
 
-
   return (
-    <Layout formActor={<FormActor />} formMovie={<FormMovie />}>
+    <Layout>
       <Switch>
-        <Route path='/actors'>          
+        <Route path='/actors'>
           <ActorsPage />
         </Route>
         <Route path='/movies'>

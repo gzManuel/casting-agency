@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import classes from './FormActor.module.css'
 
 const FormActor = (props) => {
     const [name,setName] = useState('');
@@ -28,6 +29,7 @@ const FormActor = (props) => {
             //update
             setName('');
             setGender('Male');
+            props.onFetchActors();
         }
     }
 
@@ -35,15 +37,16 @@ const FormActor = (props) => {
        
             <form onSubmit={addActorHandler}>
                 <label>Name</label><br />
-                <input type='text' value={name} onChange={event=>setName(event.target.value)} />
+                <input type='text' value={name} onChange={event=>setName(event.target.value)} className={classes.textName}/><br/>
                 <label>Gender</label><br />
-                <select value={gender} onChange={event=>setGender(event.target.value)}>
+                <select className={classes.genderSelector} value={gender} onChange={event=>setGender(event.target.value)}>
                     <option>Male</option>
                     <option>Female</option>
                 </select><br />
                 <button>
-                    Add Actor
+                    Save Actor
                 </button>
+                <button onClick={(event)=>{event.preventDefault(); props.onCancelForm()}} >Cancel</button>
             </form>
 
     );

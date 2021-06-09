@@ -1,9 +1,12 @@
+import { Fragment } from 'react';
 import Actors from '../components/Actors/Actors';
 
 
-const ActorsPage = () => {
+const ActorsPage = (props) => {
     return (
-        <Actors/>        
+        <Fragment>
+            <Actors />
+        </Fragment>
     );
 };
 

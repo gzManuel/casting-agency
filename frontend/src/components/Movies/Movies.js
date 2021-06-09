@@ -2,15 +2,18 @@ import React, { useEffect, useMemo, useState } from 'react';
 import classes from './Movies.module.css';
 import Table from '../UI/Table';
 
+import Modal from '../UI/Modal';
+import FormMovie from './FormMovie';
+
 const Movies = () => {
     const header = ['Id', 'Title', 'Release Date', 'Delete'];
     const [data, setData] = useState([]);
+    const [showForm, setShowForm] = useState(false);
 
     const { fetchMoviesHandler } = useMemo(() => {
         const fetchMoviesHandler = async () => {
             const response = await fetch('http://localhost:5000/movies');
             const json = await response.json();
-            console.log(json);
             const transformedMovies = json.movies.map(movie => {
                 return ({
                     column1: movie.id,
@@ -31,12 +34,10 @@ const Movies = () => {
                     }
                 }
             );
-            console.log(typeof (response));
-            
             const jsonResponse = await response.json();
-            jsonResponse.success&&fetchMoviesHandler();
+            jsonResponse.success && fetchMoviesHandler();
         }
-        return {fetchMoviesHandler, deleteMovieHandler};
+        return { fetchMoviesHandler, deleteMovieHandler };
     }, []);
 
     useEffect(() => {
@@ -45,7 +46,11 @@ const Movies = () => {
 
     return (
         <div className={classes.wrapperMovie}>
-            <label>Double click to select your movie</label>
+            <label>Double click to select your movie</label><br />
+            <button onClick={() => setShowForm(true)} >Add Movie</button>
+            <Modal show={showForm}
+                onCancel={() => setShowForm(false)}
+                body={<FormMovie onCancelForm={()=>setShowForm(false)} />} />
             <Table tableHeader={header} tableData={data} />
         </div>
     );

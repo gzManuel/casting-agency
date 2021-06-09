@@ -3,7 +3,7 @@ import React from 'react';
 const Actor = () => {
     return (
         <div>
-            <p contentEditable="true">Pepe</p>
+            <p >Pepe</p>
         </div>
     );
 };

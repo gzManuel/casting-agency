@@ -1,11 +1,17 @@
 import classes from './Actors.module.css';
 import Table from '../UI/Table';
+import Modal from '../UI/Modal';
+import FormActor from './FormActor';
 import { useCallback, useEffect, useState } from 'react';
 import Actor from './Actor';
 
-const Actors = () => {
+const Actors = (props) => {
+    const [showForm, setShowForm] = useState(false);
+
     const header = ['Id', 'Name', 'Gender', 'Delete'];
     const [data, setData] = useState([]);
+
+
 
     const fetchActorsHandler = useCallback(async () => {
         const response = await fetch('http://localhost:5000/actors');
@@ -29,12 +35,11 @@ const Actors = () => {
                 column1: actor.id,
                 column2: actor.name,
                 column3: actor.gender,
-                column4: <button onClick={()=>deleteActorHandler(actor.id)}> Delete </button>
+                column4: <button style={{ backgroundColor: '#181a1b', color: 'white' }} onClick={() => deleteActorHandler(actor.id)}> Delete </button>
             });
         });
         setData(transformedActors);
     }, []);
-
 
 
     useEffect(() => {
@@ -43,11 +48,18 @@ const Actors = () => {
 
     return (
         <div className={classes.wrapperActor}>
-            <label>Double click to select your actor</label>
+            <label>Double click to select your actor</label><br />
+            <button style={{ backgroundColor: 'rgb(24, 26, 27)' }}
+                onClick={() => { setShowForm(true) }}>Add actor</button>
+            <Modal show={showForm}
+                title="Add Actor"
+                body={<FormActor onFetchActors={fetchActorsHandler}
+                    onCancelForm={() => setShowForm(false)} />}
+                onCancel={() => setShowForm(false)}
+                footer='Good Job' />
+
             <Actor />
-
             <Table tableHeader={header} tableData={data} />
-
         </div>
     );
 };
