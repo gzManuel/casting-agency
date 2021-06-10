@@ -2,6 +2,7 @@ import { useState } from 'react';
 import classes from './FormActor.module.css'
 import useHttp from '../../hooks/useHttp';
 import { addActor } from '../../lib/api';
+import Button from '../UI/Button';
 
 const FormActor = (props) => {
     const [name, setName] = useState('');
@@ -15,7 +16,7 @@ const FormActor = (props) => {
             name,
             gender
         }
-        sendRequest(actor).then(() =>{
+        sendRequest(actor).then(() => {
             props.fetchActors();
             setName('');
             setGender('');
@@ -25,18 +26,25 @@ const FormActor = (props) => {
 
     return (
 
-        <form onSubmit={addActorHandler}>
+        <form onSubmit={addActorHandler} >
             <label>Name</label><br />
-            <input type='text' value={name} onChange={event => setName(event.target.value)} className={classes.textName} /><br />
+            <input type='text' value={name}
+                onChange={event => setName(event.target.value)}
+                className={classes.textName}
+                placeholder='Actor Name' /><br />
             <label>Gender</label><br />
             <select className={classes.genderSelector} value={gender} onChange={event => setGender(event.target.value)}>
                 <option>Male</option>
                 <option>Female</option>
             </select><br />
-            <button>
+            <Button>
                 Save Actor
-            </button>
-            <button onClick={(event) => { event.preventDefault(); props.onCancelForm() }} >Cancel</button>
+            </Button>
+            <Button onClick={(event) => {
+                event.preventDefault(); props.onCancelForm()
+            }}>
+                Cancel
+            </Button>
         </form>
 
     );

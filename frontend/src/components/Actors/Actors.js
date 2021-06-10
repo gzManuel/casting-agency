@@ -6,6 +6,7 @@ import Actor from './Actor';
 import { useState } from 'react';
 import { deleteActor } from '../../lib/api';
 import useHttp from '../../hooks/useHttp';
+import Button from '../UI/Button';
 
 const Actors = (props) => {
     const [showForm, setShowForm] = useState(false);
@@ -17,10 +18,10 @@ const Actors = (props) => {
             column1: actor.id,
             column2: actor.name,
             column3: actor.gender,
-            column4: <button style={{ backgroundColor: '#181a1b', color: 'white' }}
+            column4: <Button 
                 onClick={() => {
                     sendRequest(actor.id).then(() => props.onFetchActors());
-                }}> Delete </button>
+                }}> Delete </Button>
         });
 
     });
@@ -28,8 +29,8 @@ const Actors = (props) => {
     return (
         <div className={classes.wrapperActor}>
             <label >Double click to select your actor</label><br />
-            <button style={{ backgroundColor: 'rgb(24, 26, 27)' }}
-                onClick={() => { setShowForm(true) }}>Add actor</button>
+            <Button style={{ backgroundColor: 'rgb(24, 26, 27)' }}
+                onClick={() => { setShowForm(true) }}>Add actor</Button>
 
             <Modal show={showForm}
                 title="Add Actor"

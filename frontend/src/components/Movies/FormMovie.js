@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import Button from '../UI/Button';
 import classes from './FormMovie.module.css';
 
 const FormMovie = (props) => {
@@ -33,18 +34,20 @@ const FormMovie = (props) => {
 
         <form onSubmit={addMovieHandler}>
             <label>Title</label><br />
-            <input type='text' value={title} 
+            <input className={classes.input} type='text' value={title} 
             onChange={event => setTitle(event.target.value)} /><br/>
 
             <label>Gender</label><br />
-            <input type='date' value={releaseDate} onChange={event => setReleaseDate(event.target.value)} /><br/>
+            <input type='date' value={releaseDate} 
+            onChange={event => setReleaseDate(event.target.value)} 
+            className={classes.input}/><br/>
 
-            <button>
+            <Button>
                 Add Movie
-            </button>
-            <button onClick={e=>{e.preventDefault(); props.onCancelForm()}}>
+            </Button>
+            <Button onClick={e=>{e.preventDefault(); props.onCancelForm()}}>
                 Cancel
-            </button>
+            </Button>
         </form>
 
     );

@@ -6,6 +6,7 @@ import Modal from '../UI/Modal';
 import FormMovie from './FormMovie';
 import useHttp from '../../hooks/useHttp';
 import { deleteMovie } from '../../lib/api';
+import Button from '../UI/Button';
 
 const Movies = (props) => {
     const [showForm, setShowForm] = useState(false);
@@ -17,17 +18,17 @@ const Movies = (props) => {
             column1: movie.id,
             column2: movie.title,
             column3: movie.release_date,
-            column4: <button style={{ backgroundColor: '#181a1b', color: 'white' }}
+            column4: <Button style={{ backgroundColor: '#181a1b', color: 'white' }}
                 onClick={() => {
                     sendRequest(movie.id).then(() => props.onFetchMovies());
-                }}> Delete </button>
+                }}> Delete </Button>
         });
 
     });
     return (
         <div className={classes.wrapperMovie}>
             <label>Double click to select your movie</label><br />
-            <button onClick={() => setShowForm(true)} >Add Movie</button>
+            <Button onClick={() => setShowForm(true)} >Add Movie</Button>
             <Modal show={showForm}
                 onCancel={() => setShowForm(false)}
                 body={<FormMovie
