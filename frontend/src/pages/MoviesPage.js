@@ -1,7 +1,17 @@
+import { useEffect } from "react";
 import Movies from "../components/Movies/Movies";
-const MoviesPage = (props) => {
+import { getAllMovies } from '../lib/api';
+import useHttp from "../hooks/useHttp";
+
+const MoviesPage = () => {
+    const {response: loadedMovies,sendRequest} = useHttp(getAllMovies);
+
+    useEffect(()=>{
+        sendRequest();
+    },[sendRequest])
+    
     return (
-        <Movies/>
+        <Movies movies={loadedMovies} onFetchMovies={sendRequest}/>
     );
 };
 

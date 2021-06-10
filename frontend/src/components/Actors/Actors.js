@@ -3,64 +3,42 @@ import Table from '../UI/Table';
 import Modal from '../UI/Modal';
 import FormActor from './FormActor';
 import Actor from './Actor';
-import { useCallback, useEffect, useState } from 'react';
-
+import { useState } from 'react';
+import { deleteActor } from '../../lib/api';
+import useHttp from '../../hooks/useHttp';
 
 const Actors = (props) => {
     const [showForm, setShowForm] = useState(false);
+    const { sendRequest } = useHttp(deleteActor);
+    const actorHeaderTable = ['Id', 'Name', 'Gender', 'Delete'];
 
-    const header = ['Id', 'Name', 'Gender', 'Delete'];
-    const [data, setData] = useState([]);
-
-
-
-    const fetchActorsHandler = useCallback(async () => {
-        const response = await fetch('http://localhost:5000/actors');
-        const jsonResponse = await response.json();
-        const transformedActors = jsonResponse.actors.map(actor => {
-
-            const deleteActorHandler = async (id) => {
-                const response = await fetch('http://localhost:5000/actors/' + id, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const jsonResponse = await response.json();
-                if (jsonResponse.success) {
-                    fetchActorsHandler();
-                }
-            };
-
-            return ({
-                column1: actor.id,
-                column2: actor.name,
-                column3: actor.gender,
-                column4: <button style={{ backgroundColor: '#181a1b', color: 'white' }} onClick={() => deleteActorHandler(actor.id)}> Delete </button>
-            });
+    const actorBodyTable = props.actors.map(actor => {
+        return ({
+            column1: actor.id,
+            column2: actor.name,
+            column3: actor.gender,
+            column4: <button style={{ backgroundColor: '#181a1b', color: 'white' }}
+                onClick={() => {
+                    sendRequest(actor.id).then(() => props.onFetchActors());
+                }}> Delete </button>
         });
-        setData(transformedActors);
-    }, []);
 
-
-    useEffect(() => {
-        fetchActorsHandler();
-    }, [fetchActorsHandler]);
+    });
 
     return (
         <div className={classes.wrapperActor}>
-            <label>Double click to select your actor</label><br />
+            <label >Double click to select your actor</label><br />
             <button style={{ backgroundColor: 'rgb(24, 26, 27)' }}
                 onClick={() => { setShowForm(true) }}>Add actor</button>
+
             <Modal show={showForm}
                 title="Add Actor"
-                body={<FormActor onFetchActors={fetchActorsHandler}
+                body={<FormActor fetchActors={props.onFetchActors}
                     onCancelForm={() => setShowForm(false)} />}
-                onCancel={() => setShowForm(false)}
-                footer='Good Job' />
-
+                onCancel={() => setShowForm(false)} />
             <Actor />
-            <Table tableHeader={header} tableData={data} />
+
+            <Table tableHeader={actorHeaderTable} tableData={actorBodyTable} />
         </div>
     );
 };

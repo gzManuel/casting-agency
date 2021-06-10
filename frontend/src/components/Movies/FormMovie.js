@@ -22,13 +22,11 @@ const FormMovie = (props) => {
             body: JSON.stringify(movie)
         });
         const data = await response.json();
-
         if (data.success) {
             setTitle('');
             setReleaseDate('');
+            props.fetchMovies();
         }
-        
-
     }
 
     return (

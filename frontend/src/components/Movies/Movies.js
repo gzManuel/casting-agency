@@ -1,57 +1,41 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import classes from './Movies.module.css';
 import Table from '../UI/Table';
 
 import Modal from '../UI/Modal';
 import FormMovie from './FormMovie';
+import useHttp from '../../hooks/useHttp';
+import { deleteMovie } from '../../lib/api';
 
-const Movies = () => {
-    const header = ['Id', 'Title', 'Release Date', 'Delete'];
-    const [data, setData] = useState([]);
+const Movies = (props) => {
     const [showForm, setShowForm] = useState(false);
+    const { sendRequest } = useHttp(deleteMovie);
+    const movieHeaderTable = ['Id', 'Title', 'Release Date', 'Delete'];
 
-    const { fetchMoviesHandler } = useMemo(() => {
-        const fetchMoviesHandler = async () => {
-            const response = await fetch('http://localhost:5000/movies');
-            const json = await response.json();
-            const transformedMovies = json.movies.map(movie => {
-                return ({
-                    column1: movie.id,
-                    column2: movie.title,
-                    column3: movie.release_date,
-                    column4: <button onClick={() => deleteMovieHandler(movie.id)}>Delete</button>
-                });
-            });
-            setData(transformedMovies);
-        };
-        const deleteMovieHandler = async (id) => {
+    const movieBodyTable = props.movies.map(movie => {
+        return ({
+            column1: movie.id,
+            column2: movie.title,
+            column3: movie.release_date,
+            column4: <button style={{ backgroundColor: '#181a1b', color: 'white' }}
+                onClick={() => {
+                    sendRequest(movie.id).then(() => props.onFetchMovies());
+                }}> Delete </button>
+        });
 
-            const response = await fetch('http://localhost:5000/movies/' + id,
-                {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }
-            );
-            const jsonResponse = await response.json();
-            jsonResponse.success && fetchMoviesHandler();
-        }
-        return { fetchMoviesHandler, deleteMovieHandler };
-    }, []);
-
-    useEffect(() => {
-        fetchMoviesHandler();
-    }, [fetchMoviesHandler]);
-
+    });
     return (
         <div className={classes.wrapperMovie}>
             <label>Double click to select your movie</label><br />
             <button onClick={() => setShowForm(true)} >Add Movie</button>
             <Modal show={showForm}
                 onCancel={() => setShowForm(false)}
-                body={<FormMovie onCancelForm={()=>setShowForm(false)} />} />
-            <Table tableHeader={header} tableData={data} />
+                body={<FormMovie
+                    onCancelForm={() => setShowForm(false)} 
+                    fetchMovies={props.onFetchMovies}
+                    />} />
+
+            <Table tableHeader={movieHeaderTable} tableData={movieBodyTable} />
         </div>
     );
 };

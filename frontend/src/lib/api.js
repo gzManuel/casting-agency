@@ -48,11 +48,7 @@ export async function deleteMovie(id) {
     return jsonResponse;
 }
 
-export async function addActor(name, gender) {
-    const actor = {
-        name,
-        gender
-    }
+export async function addActor(actor) {
     const response = await fetch(DOMAIN + '/actors',
         {
             method: 'Post',
@@ -73,11 +69,7 @@ export async function addActor(name, gender) {
     return jsonResponse;
 }
 
-export async function addMovie(title,releaseDate) {
-    const movie = {
-        title,
-        release_date: releaseDate
-    }
+export async function addMovie(movie) {
 
     const response = await fetch(`${DOMAIN}/movies`, {
         method: 'Post',
