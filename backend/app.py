@@ -39,8 +39,9 @@ def create_app(test_config=None):
                         + CLIENT_ID+'&redirect_uri='+REDIRECT_URI)
 
     @app.route('/actors')
-    @requires_auth('get:actors')
-    def get_actors(jwt):
+    # @requires_auth('get:actors')
+    # def get_actors(jwt):
+    def get_actors():
         # Getting actors from database
         actors = Actor.query.all()
         # Using list comprehension
@@ -52,8 +53,9 @@ def create_app(test_config=None):
         })
 
     @app.route('/movies')
-    @requires_auth('get:movies')
-    def get_movies(jwt):
+    # @requires_auth('get:movies')
+    #def get_movies(jwt):
+    def get_movies():
         # Getting movies from database
         movies = Movie.query.all()
         # Using list comprehension
@@ -65,8 +67,9 @@ def create_app(test_config=None):
         })
 
     @app.route('/actors', methods=['POST'])
-    @requires_auth('post:actor')
-    def create_actor(jwt):
+    # @requires_auth('post:actor')
+    # def create_actor(jwt):
+    def create_actor():
         # Getting json data
         name = request.json.get('name')
         gender = request.json.get('gender')
@@ -99,8 +102,9 @@ def create_app(test_config=None):
             abort(422)  # Unprocesable entity
 
     @app.route('/movies', methods=['POST'])
-    @requires_auth('post:movie')
-    def create_movie(jwt):
+    # @requires_auth('post:movie')
+    # def create_movie(jwt):
+    def create_movie():
         # Getting json data
         title = request.json.get('title')
         release_date = request.json.get('release_date')
@@ -131,8 +135,9 @@ def create_app(test_config=None):
             abort(422)
 
     @app.route('/movies/<int:id>', methods=['DELETE'])
-    @requires_auth('delete:movie')
-    def delete_movie(jwt, id):
+    # @requires_auth('delete:movie')
+    # def delete_movie(jwt, id):
+    def delete_movie(id):
         movie = Movie.query.filter_by(id=id).one_or_none()
         # if there is not movie with id abort
         if movie is None:
@@ -145,8 +150,9 @@ def create_app(test_config=None):
         })
 
     @app.route('/actors/<int:id>', methods=['DELETE'])
-    @requires_auth('delete:actor')
-    def delete_actor(jwt, id):
+    # @requires_auth('delete:actor')
+    # def delete_actor(jwt, id):
+    def delete_actor(id):
         actor = Actor.query.filter_by(id=id).one_or_none()
         # if there is not actor abort with id
         if actor is None:
@@ -168,8 +174,9 @@ def create_app(test_config=None):
         return actor_list
 
     @app.route('/movies/<int:id>/update', methods=['PATCH'])
-    @requires_auth('patch:movie')
-    def update_movie(jwt, id):
+    # @requires_auth('patch:movie')
+    # def update_movie(jwt, id):
+    def update_movie(id):
         # Getting movie with id
         movie = Movie.query.filter_by(id=id).one_or_none()
         # If there is not movie, abort()
@@ -215,8 +222,9 @@ def create_app(test_config=None):
         return movie_list
 
     @app.route('/actors/<int:id>/update', methods=['PATCH'])
-    @requires_auth('patch:actor')
-    def update_actor(jwt, id):
+    # @requires_auth('patch:actor')
+    # def update_actor(jwt, id):
+    def update_actor(id):
         actor = Actor.query.filter_by(id=id).one_or_none()
         # If there is not actor to be updated, abort().
         if actor is None:
