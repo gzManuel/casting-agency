@@ -2,17 +2,20 @@ import React from 'react';
 import classes from './Table.module.css';
 
 const Table = (props) => {
-    const tableHeader = props.tableHeader.map(column => {
+    const formatedHeader = props.header.map(column => {
         return <th key={column}>{column}</th>;
     });
 
-    const tableData = props.tableData.map(row => {
+    const formatedBody = props.body.map(row => {
         let rowData = [];
         for (var column in row) {
             rowData.push(<td key={row[column]}>{row[column]}</td>);
         }
         return (
-            <tr key={row.column1} onDoubleClick={function(){console.log('Hello World')}} >
+            <tr key={row.column1} onDoubleClick={function(){
+                //console.log('Hello World')
+                //show more information of the row.
+                }} >
                 {rowData}
             </tr>
         );
@@ -22,11 +25,11 @@ const Table = (props) => {
             <table className={classes.table}>
                 <thead>
                     <tr>
-                        {tableHeader}
+                        {formatedHeader}
                     </tr>
                 </thead>
                 <tbody >
-                    {tableData}
+                    {formatedBody}
                 </tbody>
             </table>
     );

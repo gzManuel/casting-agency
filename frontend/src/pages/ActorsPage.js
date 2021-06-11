@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
 
-import Actors from '../components/Actors/Actors';
 import { getAllActors } from '../lib/api';
 import useHttp from '../hooks/useHttp';
 
+import Actors from '../components/Actors/Actors';
+
 const ActorsPage = () => {
+    
     const { response: loadedActors, sendRequest } = useHttp(getAllActors);
 
     useEffect(() => {

@@ -8,14 +8,10 @@ const Modal = (props) => {
 
     return (
         <div className={classes.modal} onClick={props.onCancel}>
-
             <div className={classes.modal__content} onClick={e =>  e.stopPropagation()}>
-                
+                <h2> {props.title} </h2>
                 <div className={classes.modal__body}>
-                    {props.body}
-                </div>
-                <div className={classes.modal_footer}>
-                    {props.footer}
+                    {props.children}
                 </div>
             </div>
         </div>

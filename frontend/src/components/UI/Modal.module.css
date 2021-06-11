@@ -16,12 +16,6 @@
     background-color: rgb(57, 62, 64);
     padding: 50px 75px;
 }
-
-.modal__header,
-.modal__footer{
-    padding:10px;
-} 
-
 .modal__body{
     padding:10px;
     border-top: 1px solid #eee;

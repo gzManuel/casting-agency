@@ -13,14 +13,14 @@ import Button from '../UI/Button';
 const Actors = (props) => {
     const [showForm, setShowForm] = useState(false);
     const { sendRequest } = useHttp(deleteActor);
-    const actorHeaderTable = ['Id', 'Name', 'Gender', 'Delete'];
+    const tableHeader = ['Id', 'Name', 'Gender', 'Delete'];
 
-    const actorBodyTable = props.actors.map(actor => {
+    const tableBody = props.actors.map(actor => {
         return ({
             column1: actor.id,
             column2: actor.name,
             column3: actor.gender,
-            column4: <Button 
+            column4: <Button
                 onClick={() => {
                     sendRequest(actor.id).then(() => props.onFetchActors());
                 }}> Delete </Button>
@@ -36,12 +36,13 @@ const Actors = (props) => {
 
             <Modal show={showForm}
                 title="Add Actor"
-                body={<FormActor fetchActors={props.onFetchActors}
-                    onCancelForm={() => setShowForm(false)} />}
-                onCancel={() => setShowForm(false)} />
+                onCancel={() => setShowForm(false)} >
+                <FormActor fetchActors={props.onFetchActors}
+                    onCancelForm={() => setShowForm(false)} />
+            </Modal>
             <Actor />
 
-            <Table tableHeader={actorHeaderTable} tableData={actorBodyTable} />
+            <Table header={tableHeader} body={tableBody} />
         </div>
     );
 };

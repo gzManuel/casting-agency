@@ -12,9 +12,9 @@ import Button from '../UI/Button';
 const Movies = (props) => {
     const [showForm, setShowForm] = useState(false);
     const { sendRequest } = useHttp(deleteMovie);
-    const movieHeaderTable = ['Id', 'Title', 'Release Date', 'Delete'];
+    const tableHeader = ['Id', 'Title', 'Release Date', 'Delete'];
 
-    const movieBodyTable = props.movies.map(movie => {
+    const tableBody = props.movies.map(movie => {
         return ({
             column1: movie.id,
             column2: movie.title,
@@ -31,13 +31,15 @@ const Movies = (props) => {
             <label>Double click to select your movie</label><br />
             <Button onClick={() => setShowForm(true)} >Add Movie</Button>
             <Modal show={showForm}
-                onCancel={() => setShowForm(false)}
-                body={<FormMovie
-                    onCancelForm={() => setShowForm(false)} 
+                title='Add Movie'
+                onCancel={() => setShowForm(false)}>
+                <FormMovie
+                    onCancelForm={() => setShowForm(false)}
                     fetchMovies={props.onFetchMovies}
-                    />} />
+                />
+            </Modal>
 
-            <Table tableHeader={movieHeaderTable} tableData={movieBodyTable} />
+            <Table header={tableHeader} body={tableBody} />
         </div>
     );
 };
