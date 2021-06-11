@@ -1,7 +1,8 @@
 import { Fragment } from "react";
+
+import './Layout.css';
 import Header from './Header';
 import NavigationBar from './NavigationBar';
-import './Layout.css';
 import Main from "./Main";
 
 const Layout = (props) => {

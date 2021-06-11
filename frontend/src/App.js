@@ -1,6 +1,7 @@
+import { Switch, Route, Redirect } from 'react-router-dom';
+
 import './App.css';
 import Layout from './components/Layout/Layout';
-import { Switch, Route, Redirect } from 'react-router-dom';
 import ActorsPage from './pages/ActorsPage';
 import MoviesPage from './pages/MoviesPage';
 

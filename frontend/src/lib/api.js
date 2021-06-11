@@ -55,28 +55,22 @@ export async function addActor(actor) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            // Always utilize JSON.stringify to convert in json an javascript object.
             body: JSON.stringify(actor)
         });
-    //The response will be a json.
     const jsonResponse = await response.json();
 
-    //success
     if (!jsonResponse.success) {
         throw new Error(jsonResponse.message || `Couldn't add Actor`);
     }
-
     return jsonResponse;
 }
 
 export async function addMovie(movie) {
-
     const response = await fetch(`${DOMAIN}/movies`, {
         method: 'Post',
         headers: {
             'Content-Type': 'application/json'
         },
-        // Always utilize JSON.stringify to convert in json an javascript object.
         body: JSON.stringify(movie)
     });
     const jsonResponse = await response.json();

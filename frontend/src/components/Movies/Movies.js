@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import classes from './Movies.module.css';
-import Table from '../UI/Table';
 
-import Modal from '../UI/Modal';
-import FormMovie from './FormMovie';
 import useHttp from '../../hooks/useHttp';
 import { deleteMovie } from '../../lib/api';
+
+import classes from './Movies.module.css';
+import Table from '../UI/Table';
+import Modal from '../UI/Modal';
+import FormMovie from './FormMovie';
 import Button from '../UI/Button';
 
 const Movies = (props) => {

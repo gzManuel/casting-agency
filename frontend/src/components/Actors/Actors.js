@@ -1,11 +1,13 @@
+import { useState } from 'react';
+
+import { deleteActor } from '../../lib/api';
+import useHttp from '../../hooks/useHttp';
+
 import classes from './Actors.module.css';
 import Table from '../UI/Table';
 import Modal from '../UI/Modal';
 import FormActor from './FormActor';
 import Actor from './Actor';
-import { useState } from 'react';
-import { deleteActor } from '../../lib/api';
-import useHttp from '../../hooks/useHttp';
 import Button from '../UI/Button';
 
 const Actors = (props) => {
