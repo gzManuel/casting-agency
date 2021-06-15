@@ -1,27 +1,38 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
-import Actor from './components/Actors/Actor';
 
 import Layout from './components/Layout/Layout';
+import ActorDetailPage from './pages/ActorDetailPage';
+import MovieDetailPage from './pages/MovieDetailPage';
 import ActorsPage from './pages/ActorsPage';
 import MoviesPage from './pages/MoviesPage';
+
 
 function App() {
 
   return (
     <Layout>
       <Switch>
+
         <Route path='/actors/:actorId' >
-          <Actor />
+          <ActorDetailPage />
         </Route>
+
+        <Route path='/movies/:movieId'>
+          <MovieDetailPage />
+        </Route>
+
         <Route path='/actors'>
           <ActorsPage />
         </Route>
+
         <Route path='/movies'>
           <MoviesPage />
         </Route>
+
         <Route path='/'>
           <Redirect to='/actors' />
         </Route>
+
       </Switch>
     </Layout>
   );

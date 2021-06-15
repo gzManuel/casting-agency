@@ -6,12 +6,13 @@ import useHttp from '../hooks/useHttp';
 import Actors from '../components/Actors/Actors';
 
 const ActorsPage = () => {
-    
     const { response: loadedActors, sendRequest } = useHttp(getAllActors);
 
     useEffect(() => {
         sendRequest();
     }, [sendRequest]);
+
+    console.log(loadedActors);
 
     return (
         <Actors actors={
