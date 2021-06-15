@@ -65,7 +65,7 @@ def create_app(test_config=None):
 
     @app.route('/movies')
     # @requires_auth('get:movies')
-    #def get_movies(jwt):
+    # def get_movies(jwt):
     def get_movies():
         # Getting movies from database
         movies = Movie.query.all()
@@ -75,6 +75,18 @@ def create_app(test_config=None):
         return jsonify({
             'success': True,
             'movies': movies_list
+        })
+
+    @app.route('/movies/<int:id>')
+    def get_movie(id):
+        movie = Movie.query.filter_by(id=id).one_or_none()
+        # Resource not found
+        if movie is None:
+            abort(404)
+
+        return jsonify({
+            'success': True,
+            'movie': movie.format_more_detail()
         })
 
     @app.route('/actors', methods=['POST'])

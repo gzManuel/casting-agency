@@ -74,6 +74,16 @@ class Movie(db.Model):
             'actors': actors_id
         }
 
+    def format_more_detail(self):
+        actors = [{'id': actor.id, 'name': actor.name, 'gender': actor.gender}
+                  for actor in self.actors]
+        return{
+            'id': self.id,
+            'title': self.title,
+            'release_date': self.release_date.strftime("%m-%d-%Y"),
+            'actors': actors
+        }
+
 
 class Actor(db.Model):
     __tablename__ = 'Actor'
