@@ -1,20 +1,29 @@
 import React from 'react';
 import classes from './Table.module.css';
+import { useHistory } from 'react-router';
 
 const Table = (props) => {
+    var history = useHistory()
     const formatedHeader = props.header.map(column => {
         return <th key={column}>{column}</th>;
     });
 
     const formatedBody = props.body.map(row => {
         let rowData = [];
+        var id;
         for (var column in row) {
+            if(column==='column1'){
+                id=row[column];
+            }
+            
+
             rowData.push(<td key={row[column]}>{row[column]}</td>);
         }
         return (
             <tr key={row.column1} onDoubleClick={function(){
-                //console.log('Hello World')
-                //show more information of the row.
+                const uri = props.path+id;
+                console.log(uri);
+                history.push(uri);
                 }} >
                 {rowData}
             </tr>

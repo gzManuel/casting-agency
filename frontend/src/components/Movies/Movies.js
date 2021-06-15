@@ -19,7 +19,7 @@ const Movies = (props) => {
             column1: movie.id,
             column2: movie.title,
             column3: movie.release_date,
-            column4: <Button style={{ backgroundColor: '#181a1b', color: 'white' }}
+            column4: <Button
                 onClick={() => {
                     sendRequest(movie.id).then(() => props.onFetchMovies());
                 }}> Delete </Button>
@@ -39,7 +39,7 @@ const Movies = (props) => {
                 />
             </Modal>
 
-            <Table header={tableHeader} body={tableBody} />
+            <Table path='/movies/' header={tableHeader} body={tableBody} />
         </div>
     );
 };

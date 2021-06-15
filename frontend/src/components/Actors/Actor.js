@@ -1,5 +1,3 @@
-import { useParams } from "react-router-dom";
-
 import styles from './Actor.module.css';
 import LineDivider from "../UI/LineDivider";
 import { ReactComponent as ChevronBlack } from '../../icons/chevron-black.svg';
@@ -9,7 +7,7 @@ import Button from "../UI/Button";
 const Actor = ({ actor }) => {
     const headerTable = ['Id', 'Title', 'Release Date', 'Delete'];
 
-    const bodyTable = ( !Array.isArray(actor) ) ? actor.movies.map(movie => {
+    const bodyTable = (!Array.isArray(actor)) ? actor.movies.map(movie => {
         return ({
             column1: movie.id,
             column2: movie.title,

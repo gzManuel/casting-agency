@@ -12,8 +12,6 @@ const ActorsPage = () => {
         sendRequest();
     }, [sendRequest]);
 
-    console.log(loadedActors);
-
     return (
         <Actors actors={
             loadedActors

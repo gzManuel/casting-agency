@@ -5,32 +5,17 @@ import { ReactComponent as ChevronBlack } from '../../icons/chevron-black.svg';
 import LineDivider from '../UI/LineDivider';
 import Table from '../UI/Table';
 
-const Movie = () => {
-    const movie = {
-        id: 1,
-        title: 'Harry poter 3',
-        release_date: '01-01-2004',
-        actors: [{
-            id: 1,
-            name: "Emma Watson",
-            gender: "Female"
-        }, {
-            id: 2,
-            name: "Daniel Radcliffe",
-            gender: "Male"
-        }]
-    }
+const Movie = ({ movie }) => {
+    const headerTable = ['Id', 'Name', 'Gender', 'Delete'];
 
-    const headerTable=['Id','Name','Gender','Delete'];
-
-    const bodyTable = movie.actors.map(actor => {
+    const bodyTable = !Array.isArray(movie) ? movie.actors.map(actor => {
         return ({
-            column1:actor.id,
-            column2:actor.name,
-            column3:actor.gender,
-            column4:<Button>Delete</Button>
+            column1: actor.id,
+            column2: actor.name,
+            column3: actor.gender,
+            column4: <Button>Delete</Button>
         });
-    })
+    }) : [];
 
 
 
@@ -75,7 +60,6 @@ const Movie = () => {
                         <ChevronBlack />
                     </span>
                 </div>
-
             </section>
 
             <section className={`${styles.actorWrapper} ${styles.movies}`}>

@@ -39,7 +39,7 @@ const Actors = (props) => {
                     onCancelForm={() => setShowForm(false)} />
             </Modal>
 
-            <Table header={tableHeader} body={tableBody} />
+            <Table path='/actors/' header={tableHeader} body={tableBody} />
         </div>
     );
 };
