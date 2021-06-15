@@ -9,6 +9,15 @@ export async function getAllActors() {
     return jsonResponse.actors;
 }
 
+export async function getActor(id){
+    const response = await fetch(`${DOMAIN}/actor/${id}`);
+    const jsonResponse = await response.json();
+    if(!jsonResponse.success){
+        throw new Error(jsonResponse.message || `Coudln't fetch Actor`);
+    }
+    return jsonResponse.actor;
+}
+
 export async function deleteActor(id) {
     const response = await fetch(DOMAIN + '/actors/' + id, {
         method: 'DELETE',
@@ -33,6 +42,17 @@ export async function getAllMovies() {
     }
     return jsonResponse.movies;
 }
+
+export async function getMovie(id){
+    const response = await fetch(`${DOMAIN}/movies/${id}`);
+    const jsonResponse = await response.json();
+
+    if(!jsonResponse.success){
+        throw new Error(jsonResponse.message || `Coudln't fetch Actor`);
+    }
+    return jsonResponse.movie;
+}
+
 export async function deleteMovie(id) {
     const response = await fetch(DOMAIN + '/movies/' + id, {
         method: 'DELETE',

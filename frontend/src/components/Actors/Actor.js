@@ -22,7 +22,7 @@ const Actor = () => {
             release_date: "01-01-2017",
             title: "Beauty and the Beast"
         }]
-    }
+    };
 
     const headerTable=['Id','Title','Release Date','Delete'];
 
@@ -33,15 +33,12 @@ const Actor = () => {
             column3:movie.release_date,
             column4:<Button>Delete</Button>
         });
-    })
-
-
+    });
 
     return (
         <div className={styles.wrapper}>
             <section className={styles.actorWrapper} >
                 <h1 className={styles.tittle}>Actor Info</h1>
-
                 <div className={styles.row}>
                     <div className={styles.col} >
                         <h3 className={styles.attributeTitle}>Id:</h3>
@@ -78,7 +75,6 @@ const Actor = () => {
                         <ChevronBlack />
                     </span>
                 </div>
-
             </section>
 
             <section className={`${styles.actorWrapper} ${styles.movies}`}>
