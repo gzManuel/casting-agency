@@ -3,6 +3,7 @@
   border-collapse: collapse;
   color: white;
 }
+
 th {
   background-color: black;
   color: white;
@@ -19,7 +20,6 @@ tr:nth-child(even) {
   /* background-color: #dddddd; */
   /* background-color: rgb(43, 47, 49); */
   background-color: rgb(35, 38, 39);
-
 }
 
 tbody tr:hover{

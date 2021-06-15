@@ -6,8 +6,6 @@ import NavigationBar from './NavigationBar';
 import Main from "./Main";
 
 const Layout = (props) => {
-
-
     return (
         <Fragment>
             <Header />

@@ -1,6 +1,6 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
+import Actor from './components/Actors/Actor';
 
-import './App.css';
 import Layout from './components/Layout/Layout';
 import ActorsPage from './pages/ActorsPage';
 import MoviesPage from './pages/MoviesPage';
@@ -10,6 +10,9 @@ function App() {
   return (
     <Layout>
       <Switch>
+        <Route path='/actors/:actorId' >
+          <Actor />
+        </Route>
         <Route path='/actors'>
           <ActorsPage />
         </Route>

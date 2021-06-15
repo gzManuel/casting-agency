@@ -11,6 +11,8 @@ const MoviesPage = () => {
     useEffect(()=>{
         sendRequest();
     },[sendRequest])
+
+    console.log(loadedMovies);
     
     return (
         <Movies movies={loadedMovies} onFetchMovies={sendRequest}/>

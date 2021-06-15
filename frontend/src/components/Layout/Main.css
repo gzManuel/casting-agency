@@ -9,7 +9,7 @@
   margin: auto;
   display: flex;
   padding: 40px 0;
-  gap: 50px;
+  gap: auto;
 }
 
 .main__welcome {

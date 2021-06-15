@@ -7,7 +7,6 @@ import classes from './Actors.module.css';
 import Table from '../UI/Table';
 import Modal from '../UI/Modal';
 import FormActor from './FormActor';
-import Actor from './Actor';
 import Button from '../UI/Button';
 
 const Actors = (props) => {
@@ -25,7 +24,6 @@ const Actors = (props) => {
                     sendRequest(actor.id).then(() => props.onFetchActors());
                 }}> Delete </Button>
         });
-
     });
 
     return (
@@ -40,7 +38,6 @@ const Actors = (props) => {
                 <FormActor fetchActors={props.onFetchActors}
                     onCancelForm={() => setShowForm(false)} />
             </Modal>
-            <Actor />
 
             <Table header={tableHeader} body={tableBody} />
         </div>

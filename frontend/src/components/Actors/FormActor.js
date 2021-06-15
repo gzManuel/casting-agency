@@ -3,7 +3,7 @@ import { useState } from 'react';
 import useHttp from '../../hooks/useHttp';
 import { addActor } from '../../lib/api';
 
-import classes from './FormActor.module.css'
+import styles from './FormActor.module.css'
 import Button from '../UI/Button';
 
 const FormActor = (props) => {
@@ -32,10 +32,10 @@ const FormActor = (props) => {
             <label>Name</label><br />
             <input type='text' value={name}
                 onChange={event => setName(event.target.value)}
-                className={classes.textName}
+                className={styles.textName}
                 placeholder='Actor Name' /><br />
             <label>Gender</label><br />
-            <select className={classes.genderSelector} value={gender} onChange={event => setGender(event.target.value)}>
+            <select className={styles.genderSelector} value={gender} onChange={event => setGender(event.target.value)}>
                 <option>Male</option>
                 <option>Female</option>
             </select><br />
