@@ -12,35 +12,37 @@ const Table = (props) => {
         let rowData = [];
         var id;
         for (var column in row) {
-            if(column==='column1'){
-                id=row[column];
+            if (column === 'column1') {
+                id = row[column];
             }
-            
+
 
             rowData.push(<td key={row[column]}>{row[column]}</td>);
         }
         return (
-            <tr key={row.column1} onDoubleClick={function(){
-                const uri = props.path+id;
-                console.log(uri);
-                history.push(uri);
-                }} >
+            <tr key={row.column1} onDoubleClick={function () {
+                if (props.path) {
+                    const uri = props.path + id;
+                    console.log(uri);
+                    history.push(uri);
+                }
+            }} >
                 {rowData}
             </tr>
         );
     });
 
     return (
-            <table className={classes.table}>
-                <thead>
-                    <tr>
-                        {formatedHeader}
-                    </tr>
-                </thead>
-                <tbody >
-                    {formatedBody}
-                </tbody>
-            </table>
+        <table className={classes.table}>
+            <thead>
+                <tr>
+                    {formatedHeader}
+                </tr>
+            </thead>
+            <tbody >
+                {formatedBody}
+            </tbody>
+        </table>
     );
 };
 
