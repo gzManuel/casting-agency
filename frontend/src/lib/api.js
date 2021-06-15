@@ -10,7 +10,7 @@ export async function getAllActors() {
 }
 
 export async function getActor(id){
-    const response = await fetch(`${DOMAIN}/actor/${id}`);
+    const response = await fetch(`${DOMAIN}/actors/${id}`);
     const jsonResponse = await response.json();
     if(!jsonResponse.success){
         throw new Error(jsonResponse.message || `Coudln't fetch Actor`);
