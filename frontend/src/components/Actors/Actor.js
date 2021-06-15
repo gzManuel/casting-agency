@@ -6,34 +6,18 @@ import { ReactComponent as ChevronBlack } from '../../icons/chevron-black.svg';
 import Table from "../UI/Table";
 import Button from "../UI/Button";
 
-const Actor = () => {
-    // const { actorId } = useParams();
+const Actor = ({ actor }) => {
+    const headerTable = ['Id', 'Title', 'Release Date', 'Delete'];
 
-    const actor = {
-        id: 1,
-        name: 'Emma Watson',
-        gender: 'Female',
-        movies: [{
-            id: 1,
-            release_date: "01-01-2004",
-            title: "Harry poter 3"
-        }, {
-            id: 5,
-            release_date: "01-01-2017",
-            title: "Beauty and the Beast"
-        }]
-    };
-
-    const headerTable=['Id','Title','Release Date','Delete'];
-
-    const bodyTable = actor.movies.map(movie => {
+    const bodyTable = ( !Array.isArray(actor) ) ? actor.movies.map(movie => {
         return ({
-            column1:movie.id,
-            column2:movie.title,
-            column3:movie.release_date,
-            column4:<Button>Delete</Button>
+            column1: movie.id,
+            column2: movie.title,
+            column3: movie.release_date,
+            column4: <Button>Delete</Button>
         });
-    });
+    }) : [];
+
 
     return (
         <div className={styles.wrapper}>

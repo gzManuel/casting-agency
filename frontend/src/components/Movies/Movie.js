@@ -6,7 +6,6 @@ import LineDivider from '../UI/LineDivider';
 import Table from '../UI/Table';
 
 const Movie = () => {
-    // const { actorId } = useParams();
     const movie = {
         id: 1,
         title: 'Harry poter 3',
