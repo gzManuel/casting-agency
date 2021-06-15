@@ -51,6 +51,17 @@ def create_app(test_config=None):
             'success': True,
             'actors': actors_list
         })
+    
+    @app.route('/actors/<int:id>')
+    def get_actor(id):
+        actor = Actor.query.filter_by(id=id).one_or_none()
+        # Resource not found
+        if actor is None:
+            abort(404)
+        return jsonify({
+            'success': True,
+            'actor': actor.format_more_detail()
+        })
 
     @app.route('/movies')
     # @requires_auth('get:movies')
@@ -157,7 +168,7 @@ def create_app(test_config=None):
         # if there is not actor abort with id
         if actor is None:
             abort(404)
-
+        
         actor.delete()
         return jsonify({
             'success': True,
