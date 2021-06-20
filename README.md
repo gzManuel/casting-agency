@@ -1,7 +1,7 @@
 # CASTING-AGENCY
-This project was done to manage data of actors and movies of Casting agencies, utilizing web technologies, and roles of users.
+This project was done to manage data of actors and movies of Casting agencies, utilizing web technologies, and role users.
 
-I hope this project will help you as guide, if you begun with react or rest apis.
+I hope this project will help you as a guide, if you begun with react or rest apis, you will find here how to build a backend and a frontend.
 
 ## Backend
 The backend utilizes:
@@ -18,6 +18,3 @@ The frontend utilizes:
 - **auth0 SDK** for login.
 
 Enter to `./frontend` directory for more information.
-
-
-
