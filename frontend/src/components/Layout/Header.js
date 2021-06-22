@@ -4,6 +4,9 @@ import { useAuth0 } from '@auth0/auth0-react';
 import './Header.css';
 import UserInfo from './UserInfo';
 
+/**
+ * The the header of the web, shows the user information when is logged, and also can logout .
+ */
 const Header = () => {
     //This constants always are going to be reset after refresh
     const { loginWithRedirect , logout, getAccessTokenSilently } = useAuth0();

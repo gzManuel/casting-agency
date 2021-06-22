@@ -4,7 +4,9 @@ import './Layout.css';
 import Header from './Header';
 import NavigationBar from './NavigationBar';
 import Main from "./Main";
-
+/**
+ * The Layout of the application, all the inside components will be showed in the main component.
+ */
 const Layout = (props) => {
     return (
         <Fragment>
@@ -14,7 +16,7 @@ const Layout = (props) => {
                 {props.children}
             </Main>
             <footer className='footer'>
-                Hi this is the footer, all reserverd copright&copy;
+                Hi this is the footer, all reserved copyright&copy;
             </footer>
         </Fragment>
     );

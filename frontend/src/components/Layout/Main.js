@@ -1,6 +1,9 @@
 import React from 'react';
 import './Main.css';
 
+/**
+ * The main component holds the more important content of this application
+ */
 const Main = (props) => {
     return (
         <div className='wrapper'>

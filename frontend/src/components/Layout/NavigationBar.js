@@ -3,6 +3,9 @@ import { NavLink } from 'react-router-dom';
 
 import classes from './NavigationBar.module.css';
 
+/**
+*  The Navigation bar to move into /actors and /movies.
+ */
 const NavigationBar = () => {
     return (
         <nav className={classes.nav}>
