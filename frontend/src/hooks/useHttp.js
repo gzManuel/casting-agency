@@ -7,6 +7,7 @@ import { useCallback, useState } from "react";
  * - sendRequest: Function utilized to execute the request.
  */
 function useHttp(requestFunction) {
+    //Saving the promise response into response variable.
     const [response, setResponse] = useState([]);
 
     const sendRequest = useCallback( async(x)=>{
