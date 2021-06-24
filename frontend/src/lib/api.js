@@ -1,8 +1,22 @@
 const DOMAIN = 'http://localhost:5000';
+/**
+ * @typedef {object} Actor
+ * @property {number} id
+ * @property {string} name
+ * @property {string} gender
+ * @property {Movie[]} movies
+ */
+
+/**
+ * @typedef {object} Movie
+ * @property {string} title
+ * @property {Date} release_date
+ * @property {Actor[]} actors
+ */
 
 /**
  * Http request to get All actors
- * @returns A promise array of actor objects.
+ * @returns {Promise<Actor[]>} All the actors.
  */
 export async function getAllActors() {
     const response = await fetch(`${DOMAIN}/actors`);
@@ -16,7 +30,7 @@ export async function getAllActors() {
 /**
  * Http request to get an actor with the given id parameter
  * @param  {number} id The id of the actor to get it.
- * @returns A promise actor object
+ * @returns {Promise<Actor>} The found actor.
  */
 export async function getActor(id){
     const response = await fetch(`${DOMAIN}/actors/${id}`);
@@ -28,14 +42,8 @@ export async function getActor(id){
 }
 /**
  * Save an actor in the database.
- * @param {object} actor this is a json object that has the following keys:
- * ```JSON
- *{
- *  name:<string>,
- *  gender:<string>
- *}
- * ```
- * @returns A promise response object
+ * @param {Actor} actor
+ * @returns {Promise<object>}
  */
  export async function addActor(actor) {
     const response = await fetch(DOMAIN + '/actors',
@@ -57,7 +65,7 @@ export async function getActor(id){
 /**
  * Delete an Actor row in the database with the given id parameter.
  * @param  {number} id The id of the actor to delete.
- * @returns A promise response information.
+ * @returns {Promise<object>} A promise response information.
  */
 export async function deleteActor(id) {
     const response = await fetch(DOMAIN + '/actors/' + id, {
@@ -75,7 +83,7 @@ export async function deleteActor(id) {
 }
 /**
  * Http request to get All movies
- * @returns A promise array of movie objects.
+ * @returns {Promise<Movie[]>} All the movies of the database.
  */
 export async function getAllMovies() {
     const response = await fetch(DOMAIN + '/movies');
@@ -90,7 +98,7 @@ export async function getAllMovies() {
 /**
  * Http request to get a movie with the given id parameter
  * @param  {number} id The id of the movie to get it.
- * @returns A promise movie object
+ * @returns {Promise<Movie>} The movie.
  */
 export async function getMovie(id){
     const response = await fetch(`${DOMAIN}/movies/${id}`);
@@ -104,7 +112,7 @@ export async function getMovie(id){
 /**
  * Delete an Movie row in the database with the given id parameter.
  * @param  {number} id The id of the movie to delete.
- * @returns A promise response information.
+ * @returns {Promise<object>} A promise response information.
  */
 export async function deleteMovie(id) {
     const response = await fetch(DOMAIN + '/movies/' + id, {
@@ -123,13 +131,8 @@ export async function deleteMovie(id) {
 
 /**
  * Save a movie in the database.
- * @param {object} movie a json object with the following information
- * ```JSON
- *  {
-        title:<string>,
-        release_date:<Date>
-    }
- * ``` 
+ * @param {Movie} movie. The movie to save.
+ * @returns {Promise<Object>} The response.
  */
 export async function addMovie(movie) {
     const response = await fetch(`${DOMAIN}/movies`, {
@@ -144,4 +147,5 @@ export async function addMovie(movie) {
     if (jsonResponse.success) {
         throw new Error(jsonResponse.message || `Couldn't add Movie`);
     }
+    return jsonResponse;
 }
