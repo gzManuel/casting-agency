@@ -21,6 +21,9 @@ const FormActor = ({ fetchActors, onCancelForm }) => {
 
     const addActorHandler = (event) => {
         event.preventDefault();
+        /**
+         * @type {import('../../lib/api').Actor}
+         */
         const actor = {
             name,
             gender

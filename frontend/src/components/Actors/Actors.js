@@ -12,7 +12,7 @@ import Button from '../UI/Button';
 /**
  * This component show actors into a table.
  * @param {object} props
- * @param {Actor[]} props.actors The actors to show in the table.
+ * @param {import('../../lib/api').Actor[]} props.actors The actors to show in the table.
  * @param {function} props.onFetchActors The function to be executed after delete an actor row.
  * @returns Actors component
  */
