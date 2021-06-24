@@ -11,11 +11,13 @@ import Button from '../UI/Button';
 
 /**
  * This component show actors into a table.
- * @param {Array} actors An array with all the actors
- * @param {object} onFetchActors this is a function that fetch all the actors when is added, deleted, modified an actor.
+ * @param {object} props
+ * @param {Actor[]} props.actors The actors to show in the table.
+ * @param {function} props.onFetchActors The function to be executed after delete an actor row.
  * @returns Actors component
  */
-const Actors = (actors, onFetchActors) => {
+
+const Actors = ({actors, onFetchActors}) => {
     //Shows the actor form.
     const [showForm, setShowForm] = useState(false);
     //The function to delete the actor.
@@ -42,7 +44,7 @@ const Actors = (actors, onFetchActors) => {
             <label >Double click to select your actor</label><br />
             <Button style={{ backgroundColor: 'rgb(24, 26, 27)' }}
                 onClick={() => { setShowForm(true) }}>Add actor</Button>
-            {/* the modal to show the actor form. */}
+            {/* The modal to show the actor form. */}
             <Modal show={showForm}
                 title="Add Actor"
                 onCancel={() => setShowForm(false)} >

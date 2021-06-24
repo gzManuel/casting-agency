@@ -4,27 +4,17 @@ import { ReactComponent as ChevronBlack } from '../../icons/chevron-black.svg';
 import Table from "../UI/Table";
 import Button from "../UI/Button";
 
-
 /**
  * @todo Return error if isn't found an actor with the given id.
  * @todo Change the returns documentation.
  * 
  * This component show information of a single actor.
- * @param {object} a json object with the actor information to show.
- * ```JSON
- * {
- *  id: number,
- *  name:<string>,
- *  gender:<string>,
- *  movies:<Array> of movie objects:
- * }
- * ```
+ * @param {{actor: Actor}} props with the actor information to show.
  * @returns An Actor component.
  */
 
 const Actor = ({ actor }) => {
     const headerTable = ['Id', 'Title', 'Release Date', 'Delete'];
-
     //If isn't an Array means that the actor is empty.
     const bodyTable = (!Array.isArray(actor)) ? actor.movies.map(movie => {
         return ({

@@ -8,11 +8,13 @@ import Button from '../UI/Button';
 
 /**
  * An actor form to save a new actor row.
- * @param {object} fetchActors A function that is executed after saving a new Actor.
- * @param {object} onCancelForm A function that is activated when is canceled the form.
+ * @param {object} props The properties.
+ * @param {function} props.fetchActors A function that is executed after saving a new Actor.
+ * @param {function} props.onCancelForm A function that is activated when is canceled the form.
  * @returns A formActor component.
  */
-const FormActor = (fetchActors, onCancelForm) => {
+
+const FormActor = ({ fetchActors, onCancelForm }) => {
     const [name, setName] = useState('');
     const [gender, setGender] = useState('Male');
     const { sendRequest } = useHttp(addActor);
