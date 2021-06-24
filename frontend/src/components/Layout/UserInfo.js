@@ -3,12 +3,12 @@ import React, { Fragment } from 'react';
 
 /**
  * Shows the information of the User.
- * @param {string} picture the picture of the user
- * @param {string} name the name of the user
- * @param {string} access the role of the user.
- * @returns 
+ * @param {string} props
+ * @param {string} props.picture The picture of the user
+ * @param {string} props.name The name of the user
+ * @param {string} props.access The role of the user.
  */
-const UserInfo = (picture, name, access) => {
+const UserInfo = ({picture, name, access}) => {
     return (<Fragment>
         <div className='item-push-left'>
             <img className='item__user-image' src={picture} alt={name} />

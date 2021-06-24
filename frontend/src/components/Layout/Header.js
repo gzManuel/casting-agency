@@ -5,6 +5,7 @@ import './Header.css';
 import UserInfo from './UserInfo';
 
 /**
+ * @todo Add code documentation
  * The the header of the web, shows the user information when is logged, and also can logout .
  */
 const Header = () => {
