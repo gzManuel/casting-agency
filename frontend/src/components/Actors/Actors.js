@@ -9,19 +9,30 @@ import Modal from '../UI/Modal';
 import FormActor from './FormActor';
 import Button from '../UI/Button';
 
-const Actors = (props) => {
+/**
+ * This component show actors into a table.
+ * @param {Array} actors An array with all the actors
+ * @param {object} onFetchActors this is a function that fetch all the actors when is added, deleted, modified an actor.
+ * @returns Actors component
+ */
+const Actors = (actors, onFetchActors) => {
+    //Shows the actor form.
     const [showForm, setShowForm] = useState(false);
+    //The function to delete the actor.
     const { sendRequest } = useHttp(deleteActor);
     const tableHeader = ['Id', 'Name', 'Gender', 'Delete'];
 
-    const tableBody = props.actors.map(actor => {
+    //Transform all the attributes of the actors into an array of objects with columns key.
+    //Each column represents every column in the table.
+    const tableBody = actors.map(actor => {
         return ({
             column1: actor.id,
             column2: actor.name,
             column3: actor.gender,
+            //This is the button that will delete a row of actors.
             column4: <Button
                 onClick={() => {
-                    sendRequest(actor.id).then(() => props.onFetchActors());
+                    sendRequest(actor.id).then(() => onFetchActors());
                 }}> Delete </Button>
         });
     });
@@ -31,11 +42,11 @@ const Actors = (props) => {
             <label >Double click to select your actor</label><br />
             <Button style={{ backgroundColor: 'rgb(24, 26, 27)' }}
                 onClick={() => { setShowForm(true) }}>Add actor</Button>
-
+            {/* the modal to show the actor form. */}
             <Modal show={showForm}
                 title="Add Actor"
                 onCancel={() => setShowForm(false)} >
-                <FormActor fetchActors={props.onFetchActors}
+                <FormActor fetchActors={onFetchActors}
                     onCancelForm={() => setShowForm(false)} />
             </Modal>
 

@@ -6,12 +6,17 @@ import { addActor } from '../../lib/api';
 import styles from './FormActor.module.css'
 import Button from '../UI/Button';
 
-const FormActor = (props) => {
+/**
+ * An actor form to save a new actor row.
+ * @param {object} fetchActors A function that is executed after saving a new Actor.
+ * @param {object} onCancelForm A function that is activated when is canceled the form.
+ * @returns A formActor component.
+ */
+const FormActor = (fetchActors, onCancelForm) => {
     const [name, setName] = useState('');
     const [gender, setGender] = useState('Male');
     const { sendRequest } = useHttp(addActor);
 
-    //Async method to make it easier to utilize promises.
     const addActorHandler = (event) => {
         event.preventDefault();
         const actor = {
@@ -19,7 +24,7 @@ const FormActor = (props) => {
             gender
         }
         sendRequest(actor).then(() => {
-            props.fetchActors();
+            fetchActors();
             setName('');
             setGender('');
         }
@@ -43,7 +48,8 @@ const FormActor = (props) => {
                 Save Actor
             </Button>
             <Button onClick={(event) => {
-                event.preventDefault(); props.onCancelForm()
+                event.preventDefault();
+                onCancelForm();
             }}>
                 Cancel
             </Button>
