@@ -7,7 +7,7 @@ import Table from '../UI/Table';
 
 /**
  * Shows the complete information of a Movie.
- * @param {{movie:import('../../lib/typedef').Movie}}  props
+ * @param {{movie:import('../../lib/api').Movie}}  props
  * @returns A movie component.
  */
 const Movie = ({ movie }) => {

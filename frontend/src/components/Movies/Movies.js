@@ -12,8 +12,8 @@ import Button from '../UI/Button';
 /**
  * This component shows movies.
  * @param {object} props
- * @param {function} onFetchMovies The function to be executed after delete a movie row.
- * @param {import('../../lib/api').Movie[]} movies All the movies to show in the table.
+ * @param {function} props.onFetchMovies The function to be executed after delete a movie row.
+ * @param {import('../../lib/api').Movie[]} props.movies All the movies to show in the table.
  * @returns A Movie component.
  */
 const Movies = ({ onFetchMovies, movies }) => {
