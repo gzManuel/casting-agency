@@ -7,13 +7,14 @@ import { useCallback, useState } from "react";
 function useHttp(requestFunction) {
     //Saving the promise response into response variable.
     const [response, setResponse] = useState([]);
-
+    /**
+     * @param x It can be the body or the uri parameter or just empty.
+     */
     const sendRequest = useCallback( async(x)=>{
         const jsonResponse = await requestFunction(x);
         setResponse(jsonResponse);
     },[requestFunction]);
 
-    console.log(response);
     const r ={
         response: response,
         sendRequest

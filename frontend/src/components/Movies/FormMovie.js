@@ -1,18 +1,21 @@
 import React from 'react';
 import { useState } from 'react';
 
+import useHttp from '../../hooks/useHttp';
+import { addMovie } from '../../lib/api'
+
 import Button from '../UI/Button';
 import classes from './FormMovie.module.css';
 
 /**
- * @todo Refactor code and utilize the useHttpHook.
  * This is a form that is utilized to add a new Movie.
  * @param {object} props The properties
  * @param {function} props.fetchMovies A function that is executed after clicking Add Movie.
  * @param {function} props.onCancelForm A function that is executed after Cancel.
  * @returns A form Component.
  */
-const FormMovie = ({fetchMovies, onCancelForm}) => {
+const FormMovie = ({ fetchMovies, onCancelForm }) => {
+    const { sendRequest } = useHttp(addMovie);
     const [title, setTitle] = useState('');
     const [releaseDate, setReleaseDate] = useState('');
 
@@ -23,22 +26,16 @@ const FormMovie = ({fetchMovies, onCancelForm}) => {
             title,
             release_date: releaseDate
         }
-        const response = await fetch('http://localhost:5000/movies', {
-            method: 'Post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            // Always utilize JSON.stringify to convert in string an object or json.
-            body: JSON.stringify(movie)
-        });
-        const data = await response.json();
-        if (data.success) {
-            setTitle('');
-            setReleaseDate('');
-            fetchMovies();
-        }
+        // sendRequest(movie).then(()=>{
+        //     setTitle('');
+        //     setReleaseDate('');
+        //     fetchMovies();
+        // });
+        await sendRequest(movie);
+        setTitle('');
+        setReleaseDate('');
+        await fetchMovies();
     }
-
     return (
 
         <form onSubmit={addMovieHandler}>

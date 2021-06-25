@@ -15,7 +15,6 @@ const MovieDetailPage = () => {
         sendRequest(movieId);
     },[sendRequest,movieId]);
     
-    console.log(loadedMovie);
     return (
         <Movie movie={loadedMovie}/>
     );
