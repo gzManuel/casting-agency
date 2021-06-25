@@ -5,9 +5,15 @@ import { ReactComponent as ChevronBlack } from '../../icons/chevron-black.svg';
 import LineDivider from '../UI/LineDivider';
 import Table from '../UI/Table';
 
+/**
+ * Shows the complete information of a Movie.
+ * @param {{movie:import('../../lib/typedef').Movie}}  props
+ * @returns A movie component.
+ */
 const Movie = ({ movie }) => {
     const headerTable = ['Id', 'Name', 'Gender', 'Delete'];
 
+    //If the movie is not an array means It's not empty so It's transformed into an array of objects.
     const bodyTable = !Array.isArray(movie) ? movie.actors.map(actor => {
         return ({
             column1: actor.id,
@@ -17,13 +23,12 @@ const Movie = ({ movie }) => {
         });
     }) : [];
 
-
-
     return (
         <div className={styles.wrapper}>
             <section className={styles.actorWrapper} >
                 <h1 className={styles.tittle}>Movie Info</h1>
 
+                {/* Shows the id of the movie */}
                 <div className={styles.row}>
                     <div className={styles.col} >
                         <h3 className={styles.attributeTitle}>Id:</h3>
@@ -36,6 +41,7 @@ const Movie = ({ movie }) => {
                     </span>
                 </div>
                 <LineDivider />
+                {/* Shows the title of the movie */}
                 <div className={styles.row}>
                     <div className={styles.col}>
                         <h3 className={styles.attributeTitle}>Title:</h3>
@@ -48,7 +54,7 @@ const Movie = ({ movie }) => {
                     </span>
                 </div>
                 <LineDivider />
-
+                {/* Shows the Release date of the movie */}
                 <div className={styles.row}>
                     <div className={styles.col}>
                         <h3 className={styles.attributeTitle}>Release Date:</h3>
