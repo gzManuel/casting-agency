@@ -28,7 +28,7 @@ const FormMovie = ({fetchMovies, onCancelForm}) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            // Always uttilize JSON.stringify to convert in string an object or json.
+            // Always utilize JSON.stringify to convert in string an object or json.
             body: JSON.stringify(movie)
         });
         const data = await response.json();
