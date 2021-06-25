@@ -136,7 +136,7 @@ export async function deleteMovie(id) {
  */
 export async function addMovie(movie) {
     const response = await fetch(`${DOMAIN}/movies`, {
-        method: 'Post',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -144,7 +144,7 @@ export async function addMovie(movie) {
     });
     const jsonResponse = await response.json();
 
-    if (jsonResponse.success) {
+    if (!jsonResponse.success) {
         throw new Error(jsonResponse.message || `Couldn't add Movie`);
     }
     return jsonResponse;
