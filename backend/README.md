@@ -301,7 +301,7 @@ Example:
   "success": true
 }
 ```
-#### GET '/movies/1'
+#### GET '/movies/\<int:id>'
 
 - Fetches a dictionary with a movie with all their related actors and a success value, utilizing a bearer token for authentication.
 - Request Arguments: Header authorization bearer token.

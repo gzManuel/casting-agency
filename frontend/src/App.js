@@ -5,14 +5,14 @@ import ActorDetailPage from './pages/ActorDetailPage';
 import MovieDetailPage from './pages/MovieDetailPage';
 import ActorsPage from './pages/ActorsPage';
 import MoviesPage from './pages/MoviesPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 
 function App() {
-
   return (
     <Layout>
       <Switch>
-
+        
         <Route path='/actors/:actorId' >
           <ActorDetailPage />
         </Route>
@@ -29,8 +29,12 @@ function App() {
           <MoviesPage />
         </Route>
 
-        <Route path='/'>
+        <Route path='/' exact>
           <Redirect to='/actors' />
+        </Route>
+
+        <Route path='/*'>
+          <NotFoundPage />
         </Route>
 
       </Switch>
