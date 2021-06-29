@@ -24,11 +24,17 @@ function httpReducer(state, action) {
             return state;
     }
 }
+/**
+ * @typedef {object} HttpResponse
+ * @property {string} status The status of the response can be: 'not send', 'pending', 'completed'.
+ * @property {object} data The response data.
+ * @property {string} error The error message.
+ */
 
 /**
  * This hook is utilized to execute http request and get the response as an object.
  * @param  {function} requestFunction A http function of /lib.api.js to be utilized or other kind of http request.
- * @returns {{httpState:object, sendRequest:function}},
+ * @returns {{httpState:HttpResponse, sendRequest:function}},
  */
 function useHttp(requestFunction) {
     const init = {
