@@ -4,8 +4,10 @@ import './Spinner.css';
  */
 const Spinner = () => {
     return (
-        <div className='loader'>
-            
+        <div style={{ width: '100%' }} >
+            <div className='loader'>
+
+            </div>
         </div>
     );
 };
