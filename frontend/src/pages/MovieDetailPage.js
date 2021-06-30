@@ -3,20 +3,25 @@ import { useParams } from 'react-router-dom';
 import Movie from '../components/Movies/Movie';
 import useHttp from '../hooks/useHttp';
 import { getMovie } from '../lib/api';
+import Spinner from '../components/UI/Spinner';
 
 /**
  * A component that renders and shows the Movie component, also get and load the movie into the Movie component.
  */
 const MovieDetailPage = () => {
     const { movieId } = useParams();
-    const {response: loadedMovie, sendRequest} = useHttp(getMovie);
+    const { httpState, sendRequest } = useHttp(getMovie);
 
-    useEffect(()=>{
+    useEffect(() => {
         sendRequest(movieId);
-    },[sendRequest,movieId]);
+    }, [sendRequest, movieId]);
+
+    if (httpState.status === 'pending' || httpState.status === 'not send') {
+        return <Spinner />
+    }
     
     return (
-        <Movie movie={loadedMovie}/>
+        <Movie movie={httpState.data} />
     );
 };
 

@@ -4,22 +4,27 @@ import Movies from "../components/Movies/Movies";
 
 import { getAllMovies } from '../lib/api';
 import useHttp from "../hooks/useHttp";
+import Spinner from '../components/UI/Spinner';
 
 /**
  * This component renders Movies, get and fill it with movies.
  */
 
 const MoviesPage = () => {
-    const {response: loadedMovies,sendRequest} = useHttp(getAllMovies);
+    const { httpState, sendRequest } = useHttp(getAllMovies);
 
-    useEffect(()=>{
+    useEffect(() => {
         sendRequest();
-    },[sendRequest])
-    
+    }, [sendRequest])
+
+    if (httpState.status === 'pending' || httpState.status === 'not send') {
+        return <Spinner />
+    }
+
     return (
-        <Movies movies={loadedMovies} 
-        // Update all the loaded movies when is deleted a movie row.
-        onFetchMovies={sendRequest}/>
+        <Movies movies={httpState.data}
+            // Update all the loaded movies when is deleted a movie row.
+            onFetchMovies={sendRequest} />
     );
 };
 
