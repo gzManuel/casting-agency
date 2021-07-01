@@ -13,7 +13,7 @@ function App() {
     <Layout>
       <Switch>
         
-        <Route path='/actors/:actorId' >
+        {/* <Route path='/actors/:actorId' >
           <ActorDetailPage />
         </Route>
 
@@ -27,7 +27,7 @@ function App() {
 
         <Route path='/movies'>
           <MoviesPage />
-        </Route>
+        </Route> */}
 
         <Route path='/' exact>
           <Redirect to='/actors' />

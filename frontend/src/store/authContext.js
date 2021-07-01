@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 /**
  * @typedef User
  * @property {string} name 
@@ -10,12 +10,14 @@ import React, { useEffect, useState } from 'react';
  */
 
 /**
- * fsdfdsf
+ * 
  * @param  {boolean} isLoggedIn
  * @param  {User} user the user information
+ * @param {function} onLogin
+ * @param {function} onLogout
  */
 const AuthContext = React.createContext({
-    isLoggedIn: false,
+    isAuthenticated: false,
     user: {
         name: null,
         email: null,
@@ -23,40 +25,58 @@ const AuthContext = React.createContext({
         token: null,
         role: null,
         permissions: []
-    }
+    },
+    onLogin: () => { },
+    onLogout: () => { }
 });
 
 /**
  * @todo I need to add role and permissions.
  */
 export const AuthContextProvider = (props) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState({});
+    
+    const loginHandler = useCallback(() => {
+        // const lcIsAuthenticated = localStorage.getItem('isAuthenticated');
+
+        setIsAuthenticated(true);
+        const lcUser = JSON.parse(localStorage.getItem('user'));
+        const lcToken = localStorage.getItem('token');
+        setUser({
+            name: lcUser.name,
+            email: lcUser.email,
+            token: lcToken,
+            picture: lcUser.picture,
+            //Change this.
+            role: null,
+            permissions: []
+        });
+    }, []);
 
     useEffect(() => {
-        const lcIsLoggedIn = localStorage.getItem('isLoggedIn');
-
-        if (lcIsLoggedIn === '1') {
-            setIsLoggedIn(true);
-            const lcUser = JSON.parse(localStorage.getItem('user'));
-            const lcToken = localStorage.getItem('token');
-            setUser({
-                name:lcUser.name,
-                email:lcUser.email,
-                token:lcToken,
-                picture:lcUser.picture,
-                //Change this.
-                role:null,
-                permissions:[]
-            });
+        const lcIsAuthenticated = localStorage.getItem('isAuthenticated');
+        if (lcIsAuthenticated === '1') {
+            loginHandler();
         }
-    }, []);
+    }, [loginHandler]);
+
+    const logoutHandler = () => {
+        // const lcIsAuthenticated = localStorage.getItem('isAuthenticated');
+
+        setIsAuthenticated(false);
+        setUser({});
+    }
+
+
 
     return (
         <AuthContext.Provider
             value={{
-                isLoggedIn: isLoggedIn,
-                user:user
+                isAuthenticated: isAuthenticated,
+                user: user,
+                onLogin: loginHandler,
+                onLogout: logoutHandler
             }}>
             {props.children}
         </AuthContext.Provider>

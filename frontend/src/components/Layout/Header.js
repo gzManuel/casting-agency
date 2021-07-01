@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useContext } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import AuthContext from '../../store/authContext';
 
 import './Header.css';
 import UserInfo from './UserInfo';
+import Spinner from '../UI/Spinner';
 
 /**
  * @todo Add code documentation
@@ -10,57 +12,45 @@ import UserInfo from './UserInfo';
  */
 const Header = () => {
     //This constants always are going to be reset after refresh
-    const { loginWithRedirect , logout, getAccessTokenSilently } = useAuth0();
+    //Functions
+    const { loginWithRedirect, logout, getAccessTokenSilently } = useAuth0();
+    //Variables
     const { isAuthenticated, isLoading, user } = useAuth0();
 
-    const [name, setName] = useState();
-    const [picture, setPicture] = useState();
-    const [authenticated, setAuthenticated] = useState();
+    //Using Context.
+    const authCtx = useContext(AuthContext);
 
-    const setLocalStoreHandler = (token) => {
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(user));
-    }
-
-    const onLogoutHandler = () => {
+    const logoutHandler = () => {
         logout();
+        authCtx.onLogout();
         localStorage.clear();
     }
-    
 
-    useEffect(() => {
-        //Checking if there're data saving in localstorage.
-        if (localStorage.length !== 0) {
-            
-            //Transforming String to object
-            const user = JSON.parse(localStorage.getItem('user'));
-            //Setting the Name picture and authenticated
-            setName(user.name);
-            setPicture(user.picture);
-            setAuthenticated(true);
-        }
-    }, []);
-
-    if(isAuthenticated){
-        getAccessTokenSilently().then(token=>setLocalStoreHandler(token)); 
+    // Once is authenticated save user data in to localstorage and login.
+    if (isAuthenticated) {
+        getAccessTokenSilently().then(token => {
+            localStorage.setItem('isAuthenticated', '1');
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(user));
+        });
     }
 
     if (isLoading) {
         //Show loading animation.
-        return (<div>Loading...</div>);
+        // return (<div>Loading...</div>);
+        return <Spinner/>
     }
- 
+
     return (
         <header className='header' >
-
             <div className='item'>
                 <h2 className='item__logo'>Casting agencies</h2>
             </div>
 
-            {(authenticated||isAuthenticated) && (<UserInfo name={authenticated? name:user.name } picture={authenticated?picture:user.picture} />)}
-
+            {(authCtx.isAuthenticated || isAuthenticated) && (<UserInfo name={authCtx.isAuthenticated ? authCtx.user.name : user.name}
+                picture={authCtx.isAuthenticated ? authCtx.user.picture : user.picture} />)}
             <div className='item'>
-                {authenticated ||isAuthenticated ? <button onClick={onLogoutHandler} className='item__logout'>Logout</button> :
+                {authCtx.isAuthenticated || isAuthenticated ? <button onClick={logoutHandler} className='item__logout'>Logout</button> :
                     <button onClick={loginWithRedirect} className='item__login'>Login</button>}
             </div>
         </header>

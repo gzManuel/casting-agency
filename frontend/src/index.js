@@ -1,11 +1,12 @@
 import { Auth0Provider } from '@auth0/auth0-react';
-import {BrowserRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { AuthContextProvider } from './store/authContext';
 
 ReactDOM.render(
   <Auth0Provider
@@ -13,12 +14,14 @@ ReactDOM.render(
     clientId="dHcx5YOFdrqajYeb8Huzc15o35UtP75x"
     audience='api'
     scope='read:current_user read:roles read:users'
-    redirectUri={window.location.origin}>
-    <React.StrictMode>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </React.StrictMode>
+    redirectUri={'http://localhost:3000/actors'}>
+    <AuthContextProvider>
+      <React.StrictMode>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </React.StrictMode>
+    </AuthContextProvider>
   </Auth0Provider>,
   document.getElementById('root')
 );
