@@ -32,10 +32,10 @@ export async function getAllActors() {
  * @param  {number} id The id of the actor to get it.
  * @returns {Promise<Actor>} The found actor.
  */
-export async function getActor(id){
+export async function getActor(id) {
     const response = await fetch(`${DOMAIN}/actors/${id}`);
     const jsonResponse = await response.json();
-    if(!jsonResponse.success){
+    if (!jsonResponse.success) {
         throw new Error(jsonResponse.message || `Couldn't fetch Actor`);
     }
     return jsonResponse.actor;
@@ -45,7 +45,7 @@ export async function getActor(id){
  * @param {Actor} actor
  * @returns {Promise<object>}
  */
- export async function addActor(actor) {
+export async function addActor(actor) {
     const response = await fetch(DOMAIN + '/actors',
         {
             method: 'Post',
@@ -100,11 +100,11 @@ export async function getAllMovies() {
  * @param  {number} id The id of the movie to get it.
  * @returns {Promise<Movie>} The movie.
  */
-export async function getMovie(id){
+export async function getMovie(id) {
     const response = await fetch(`${DOMAIN}/movies/${id}`);
     const jsonResponse = await response.json();
 
-    if(!jsonResponse.success){
+    if (!jsonResponse.success) {
         throw new Error(jsonResponse.message || `Couldn't fetch Movie`);
     }
     return jsonResponse.movie;
@@ -146,6 +146,21 @@ export async function addMovie(movie) {
 
     if (!jsonResponse.success) {
         throw new Error(jsonResponse.message || `Couldn't add Movie`);
+    }
+    return jsonResponse;
+}
+
+/**
+ * get rol from a user.
+ * @param {string} id_user the id of the user
+ * @returns {Promise<Object>} The response.
+ */
+export async function getUserRole(id_user) {
+    const response = await fetch(`${DOMAIN}/users/${id_user}/role`);
+
+    const jsonResponse = await response.json();
+    if (!jsonResponse.success){
+        throw new Error(jsonResponse.message||`Couldn't get user role`);
     }
     return jsonResponse;
 }
