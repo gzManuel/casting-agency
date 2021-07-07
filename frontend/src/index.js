@@ -13,7 +13,6 @@ ReactDOM.render(
     domain="casting-agency-bo.us.auth0.com"
     clientId="dHcx5YOFdrqajYeb8Huzc15o35UtP75x"
     audience='api'
-    scope='read:current_user read:roles read:users'
     redirectUri={'http://localhost:3000/actors'}>
     <AuthContextProvider>
       <React.StrictMode>

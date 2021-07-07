@@ -3,15 +3,29 @@ import { useAuth0 } from '@auth0/auth0-react';
 import './Header.css';
 import UserInfo from './UserInfo';
 import Spinner from '../UI/Spinner';
+import { useEffect } from 'react';
 
 /**
  * The header of the web, shows the user information when is logged, and also can logout .
  */
 const Header = () => {
     //Functions
-    const { loginWithRedirect, logout } = useAuth0();
+    const { loginWithRedirect, logout, getAccessTokenSilently } = useAuth0();
     //Variables
     const { isAuthenticated, isLoading, user } = useAuth0();
+
+    console.log(user);
+
+    useEffect(() => {
+        console.log(localStorage.getItem('token'));
+        if (localStorage.getItem('token') === null && isAuthenticated) {
+
+            getAccessTokenSilently().then(token => {
+                localStorage.setItem('token',token);
+                console.log(token);
+            });
+        }
+    }, [getAccessTokenSilently, isAuthenticated]);
 
     const logoutHandler = () => {
         logout();
