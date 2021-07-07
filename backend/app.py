@@ -1,4 +1,6 @@
+import json
 import os
+import http.client
 from flask import (
     Flask,
     request,
@@ -62,6 +64,42 @@ def create_app(test_config=None):
             'success': True,
             'actor': actor.format_more_detail()
         })
+    # Function to get management api token
+    # TODO: Improve the payload format.
+    def get_management_token():
+        conn = http.client.HTTPSConnection("casting-agency-bo.us.auth0.com")
+        # client_id = 'siwBohtxDLLO1esorYtzYw8R59ESxRwK'
+        # client_secret='xhOimeIqbX-xa6pEMfmy2VLdquw7yOa3ZzntRSsuSxOJyCjzCK-mmPr3chQg9pwW'
+        # audience = 'https://casting-agency-bo.us.auth0.com/api/v2/'
+        # grant_type='client_credentials'
+        # payload = {"client_id":client_id,"client_secret":client_secret,"audience":audience,"grant_type":grant_type}
+        # print(payload)
+        payload = "{\"client_id\":\"siwBohtxDLLO1esorYtzYw8R59ESxRwK\",\"client_secret\":\"xhOimeIqbX-xa6pEMfmy2VLdquw7yOa3ZzntRSsuSxOJyCjzCK-mmPr3chQg9pwW\",\"audience\":\"https://casting-agency-bo.us.auth0.com/api/v2/\",\"grant_type\":\"client_credentials\"}"
+        headers = { 'content-type': "application/json" }
+        conn.request("POST", "/oauth/token", payload, headers)
+        res = conn.getresponse()
+        data = res.read()
+        # Transformin the response into a dictionary.
+        dictionary_data= json.loads(data)
+    
+        return dictionary_data['access_token']
+    
+    #TODO: add documentation of this api
+    @app.route('/users/<id_user>/role')
+    def get_user_role(id_user):
+        management_token = get_management_token()
+        conn = http.client.HTTPSConnection("casting-agency-bo.us.auth0.com")
+        headers = { 'authorization': "Bearer {token}".format(token=management_token) }
+        conn.request("GET", "/api/v2/users/{id}/roles".format(id=id_user), headers=headers)
+        res = conn.getresponse()
+        data = res.read()
+
+        dictionary_data = json.loads(data)
+        return jsonify({
+            'success':'true',
+            'role':dictionary_data[0]['name']
+        })
+
 
     @app.route('/movies')
     # @requires_auth('get:movies')
