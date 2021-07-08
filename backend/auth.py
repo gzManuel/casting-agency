@@ -71,7 +71,7 @@ def verify_decode_jwt(token):
     Args:
         token (String): token got it by get_token_auth_header function
     Raises:
-        AuthError: If the auhotization is malformed
+        AuthError: If the authorization is malformed
         AuthError: If the token is expired
         AuthError: if have incorrect claims
         AuthError: Can't authenticate token
@@ -165,8 +165,8 @@ def check_permissions(permission, payload):
 
 def requires_auth(permission=''):
     """This is a decorator used with all the apis that need to check the
-    authentification and permissions of the api.
-    Utilize all the functions written above to verify, authentificate jwt,
+    authentication and permissions of the api.
+    Utilize all the functions written above to verify, authenticate jwt,
     and check its permissions.
     Args:
         permission (str, optional): The permission of the api, for example
