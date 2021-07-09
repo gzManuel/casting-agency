@@ -13,6 +13,7 @@ from flask import (
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from sqlalchemy.orm import exc
+from sqlalchemy.sql.expression import true
 from models import setup_db, Movie, Actor
 from auth import AuthError, requires_auth
 
@@ -41,9 +42,8 @@ def create_app(test_config=None):
                         + CLIENT_ID+'&redirect_uri='+REDIRECT_URI)
 
     @app.route('/actors')
-    # @requires_auth('get:actors')
-    # def get_actors(jwt):
-    def get_actors():
+    @requires_auth('get:actors')
+    def get_actors(jwt):
         # Getting actors from database
         actors = Actor.query.all()
         # Using list comprehension
@@ -55,7 +55,8 @@ def create_app(test_config=None):
         })
     
     @app.route('/actors/<int:id>')
-    def get_actor(id):
+    @requires_auth('get:actor')
+    def get_actor(jwt,id):
         actor = Actor.query.filter_by(id=id).one_or_none()
         # Resource not found
         if actor is None:
@@ -64,6 +65,7 @@ def create_app(test_config=None):
             'success': True,
             'actor': actor.format_more_detail()
         })
+
     # Function to get management api token
     # TODO: Improve the payload format.
     def get_management_token():
@@ -83,10 +85,11 @@ def create_app(test_config=None):
         dictionary_data= json.loads(data)
     
         return dictionary_data['access_token']
-    
+
     #TODO: add documentation of this api
-    @app.route('/users/<id_user>/role')
-    def get_user_role(id_user):
+    @app.route('/users/<string:id_user>/role')
+    @requires_auth('get:user_role')
+    def get_user_role(jwt,id_user):
         management_token = get_management_token()
         conn = http.client.HTTPSConnection("casting-agency-bo.us.auth0.com")
         headers = { 'authorization': "Bearer {token}".format(token=management_token) }
@@ -94,17 +97,16 @@ def create_app(test_config=None):
         res = conn.getresponse()
         data = res.read()
 
+        print('Hola mundo')
         dictionary_data = json.loads(data)
         return jsonify({
             'success':'true',
             'role':dictionary_data[0]['name']
         })
 
-
     @app.route('/movies')
-    # @requires_auth('get:movies')
-    # def get_movies(jwt):
-    def get_movies():
+    @requires_auth('get:movies')
+    def get_movies(jwt):
         # Getting movies from database
         movies = Movie.query.all()
         # Using list comprehension
@@ -116,7 +118,8 @@ def create_app(test_config=None):
         })
 
     @app.route('/movies/<int:id>')
-    def get_movie(id):
+    @requires_auth('get:movie')
+    def get_movie(jwt, id):
         movie = Movie.query.filter_by(id=id).one_or_none()
         # Resource not found
         if movie is None:
@@ -128,9 +131,8 @@ def create_app(test_config=None):
         })
 
     @app.route('/actors', methods=['POST'])
-    # @requires_auth('post:actor')
-    # def create_actor(jwt):
-    def create_actor():
+    @requires_auth('post:actor')
+    def create_actor(jwt):
         # Getting json data
         name = request.json.get('name')
         gender = request.json.get('gender')
@@ -163,9 +165,8 @@ def create_app(test_config=None):
             abort(422)  # Unprocesable entity
 
     @app.route('/movies', methods=['POST'])
-    # @requires_auth('post:movie')
-    # def create_movie(jwt):
-    def create_movie():
+    @requires_auth('post:movie')
+    def create_movie(jwt):
         # Getting json data
         title = request.json.get('title')
         release_date = request.json.get('release_date')
@@ -196,9 +197,8 @@ def create_app(test_config=None):
             abort(422)
 
     @app.route('/movies/<int:id>', methods=['DELETE'])
-    # @requires_auth('delete:movie')
-    # def delete_movie(jwt, id):
-    def delete_movie(id):
+    @requires_auth('delete:movie')
+    def delete_movie(jwt, id):
         movie = Movie.query.filter_by(id=id).one_or_none()
         # if there is not movie with id abort
         if movie is None:
@@ -211,9 +211,8 @@ def create_app(test_config=None):
         })
 
     @app.route('/actors/<int:id>', methods=['DELETE'])
-    # @requires_auth('delete:actor')
-    # def delete_actor(jwt, id):
-    def delete_actor(id):
+    @requires_auth('delete:actor')
+    def delete_actor(jwt, id):
         actor = Actor.query.filter_by(id=id).one_or_none()
         # if there is not actor abort with id
         if actor is None:
@@ -235,9 +234,8 @@ def create_app(test_config=None):
         return actor_list
 
     @app.route('/movies/<int:id>/update', methods=['PATCH'])
-    # @requires_auth('patch:movie')
-    # def update_movie(jwt, id):
-    def update_movie(id):
+    @requires_auth('patch:movie')
+    def update_movie(jwt, id):
         # Getting movie with id
         movie = Movie.query.filter_by(id=id).one_or_none()
         # If there is not movie, abort()
@@ -245,6 +243,9 @@ def create_app(test_config=None):
             abort(404)
 
         # Getting json data to update movie.
+        if(request.json==None):
+            abort(400)
+        
         json = request.json
         title = json.get('title')
         release_date = json.get('release_date')
@@ -283,15 +284,17 @@ def create_app(test_config=None):
         return movie_list
 
     @app.route('/actors/<int:id>/update', methods=['PATCH'])
-    # @requires_auth('patch:actor')
-    # def update_actor(jwt, id):
-    def update_actor(id):
+    @requires_auth('patch:actor')
+    def update_actor(jwt, id):
         actor = Actor.query.filter_by(id=id).one_or_none()
         # If there is not actor to be updated, abort().
         if actor is None:
             abort(404)
 
         # Getting the atributes data to update the actor.
+        if(request.json==None):
+            abort(400)     
+        
         json = request.json
         name = json.get('name')
         gender = json.get('gender')
