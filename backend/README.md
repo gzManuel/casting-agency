@@ -48,13 +48,14 @@ psql casting-agency < casting-agency.pgsql
 ```
 
 ## Roles of the project.
+
 For this project we have three roles and every one have different permissions.
 
 - Casting Assistant
   - get:actors
-  <!-- - get:actor -->
+  - get:actor
   - get:movies
-  <!-- - get:movie -->
+  - get:movie
 - Casting Director
   - get:actors
   - get:movies
@@ -74,12 +75,16 @@ For this project we have three roles and every one have different permissions.
 
 ## Running the server
 
-From the source code directory first ensure you're working using your created virtual enviroment.
+From the source code directory first ensure you're working using your created virtual environment.
 
 To run the server, execute:
 
 ```bash
-# To setup the config variables, also you can modify the DATABASE_URL
+# To setup the config variables, also you can modify the: 
+# DATABASE_URL : where is located you're database.
+# AUTH0_DOMAIN : The name of your api. 
+# ALGORITHMS : The kind of algorithm you're utilizing to encode your jwt.
+
 source setup.sh
 python manage.py runserver -r
 ```
@@ -152,6 +157,7 @@ The API will return the next error types when request fail:
 - GET '/actors/\<int:id>'
 - GET '/movies'
 - GET '/movies/\<int:id>'
+- GET '/users/\<string:id/>/role'
 - POST '/actors'
 - POST'/movies'
 - DELETE '/actors/\<int:id>'
@@ -254,8 +260,6 @@ Example:
 }
 ```
 
-
-
 #### GET '/movies'
 
 - Fetches a a movies and a success value, utilizing a bearer token for authentication.
@@ -301,6 +305,7 @@ Example:
   "success": true
 }
 ```
+
 #### GET '/movies/\<int:id>'
 
 - Fetches a dictionary with a movie with all their related actors and a success value, utilizing a bearer token for authentication.
@@ -350,6 +355,38 @@ Example:
 }
 ```
 
+#### GET '/users/\<string:id_user/>/role'
+
+NOTE: The id_user is the id provided for auth0 when you logged to the app.
+
+- Fetch the role assigned of a user.
+- Request Arguments:
+  - Header authorization bearer token.
+
+Example:
+
+GET 'localhost:5000/google-oauth2|104718474803384280822/role
+
+headers
+
+```JSON
+{
+    "authorization": "Bearer <Token>"
+}
+
+```
+
+- Returns: A json with the next keys:
+  - success: If the petition was success.
+  - role: the role of the user.
+
+Example:
+```JSON
+{
+    "role": "Executive Producer",
+    "success": "true"
+}
+```
 #### POST '/actors'
 
 - Create an actor through json request and bearer token for authentication.
