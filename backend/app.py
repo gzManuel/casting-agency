@@ -1,6 +1,6 @@
 import json
-import os
 import http.client
+import os
 from flask import (
     Flask,
     request,
@@ -19,28 +19,13 @@ from auth import AuthError, requires_auth
 
 
 def create_app(test_config=None):
-    AUTH0_DOMAIN = str(os.getenv('AUTH0_DOMAIN'))
-    API_AUDIENCE = str(os.getenv('API_AUDIENCE'))
-    CLIENT_ID = str(os.getenv('CLIENT_ID'))
-    REDIRECT_URI = str(os.getenv('REDIRECT_URI'))
-
     # Create and configure the app
+
     app = Flask(__name__)
     setup_db(app)
     CORS(app)
 
-    # The to get the jwt easily and copy it.
-    @app.route('/')
-    def index():
-        return render_template('index.html')
-
-    # Used to login and get the JWT token
-    @app.route('/login')
-    def login():
-        return redirect('https://'+AUTH0_DOMAIN+'/authorize?audience='
-                        + API_AUDIENCE+'&response_type=token&client_id='
-                        + CLIENT_ID+'&redirect_uri='+REDIRECT_URI)
-
+    # Routes
     @app.route('/actors')
     @requires_auth('get:actors')
     def get_actors(jwt):
@@ -53,10 +38,10 @@ def create_app(test_config=None):
             'success': True,
             'actors': actors_list
         })
-    
+
     @app.route('/actors/<int:id>')
     @requires_auth('get:actor')
-    def get_actor(jwt,id):
+    def get_actor(jwt, id):
         actor = Actor.query.filter_by(id=id).one_or_none()
         # Resource not found
         if actor is None:
@@ -64,44 +49,6 @@ def create_app(test_config=None):
         return jsonify({
             'success': True,
             'actor': actor.format_more_detail()
-        })
-
-    # Function to get management api token
-    # TODO: Improve the payload format.
-    def get_management_token():
-        conn = http.client.HTTPSConnection("casting-agency-bo.us.auth0.com")
-        # client_id = 'siwBohtxDLLO1esorYtzYw8R59ESxRwK'
-        # client_secret='xhOimeIqbX-xa6pEMfmy2VLdquw7yOa3ZzntRSsuSxOJyCjzCK-mmPr3chQg9pwW'
-        # audience = 'https://casting-agency-bo.us.auth0.com/api/v2/'
-        # grant_type='client_credentials'
-        # payload = {"client_id":client_id,"client_secret":client_secret,"audience":audience,"grant_type":grant_type}
-        # print(payload)
-        payload = "{\"client_id\":\"siwBohtxDLLO1esorYtzYw8R59ESxRwK\",\"client_secret\":\"xhOimeIqbX-xa6pEMfmy2VLdquw7yOa3ZzntRSsuSxOJyCjzCK-mmPr3chQg9pwW\",\"audience\":\"https://casting-agency-bo.us.auth0.com/api/v2/\",\"grant_type\":\"client_credentials\"}"
-        headers = { 'content-type': "application/json" }
-        conn.request("POST", "/oauth/token", payload, headers)
-        res = conn.getresponse()
-        data = res.read()
-        # Transformin the response into a dictionary.
-        dictionary_data= json.loads(data)
-    
-        return dictionary_data['access_token']
-
-    #TODO: add documentation of this api
-    @app.route('/users/<string:id_user>/role')
-    @requires_auth('get:user_role')
-    def get_user_role(jwt,id_user):
-        management_token = get_management_token()
-        conn = http.client.HTTPSConnection("casting-agency-bo.us.auth0.com")
-        headers = { 'authorization': "Bearer {token}".format(token=management_token) }
-        conn.request("GET", "/api/v2/users/{id}/roles".format(id=id_user), headers=headers)
-        res = conn.getresponse()
-        data = res.read()
-
-        print('Hola mundo')
-        dictionary_data = json.loads(data)
-        return jsonify({
-            'success':'true',
-            'role':dictionary_data[0]['name']
         })
 
     @app.route('/movies')
@@ -214,10 +161,10 @@ def create_app(test_config=None):
     @requires_auth('delete:actor')
     def delete_actor(jwt, id):
         actor = Actor.query.filter_by(id=id).one_or_none()
-        # if there is not actor abort with id
+        # If there is not actor abort.
         if actor is None:
             abort(404)
-        
+
         actor.delete()
         return jsonify({
             'success': True,
@@ -243,9 +190,9 @@ def create_app(test_config=None):
             abort(404)
 
         # Getting json data to update movie.
-        if(request.json==None):
+        if(request.json == None):
             abort(400)
-        
+
         json = request.json
         title = json.get('title')
         release_date = json.get('release_date')
@@ -292,9 +239,9 @@ def create_app(test_config=None):
             abort(404)
 
         # Getting the atributes data to update the actor.
-        if(request.json==None):
-            abort(400)     
-        
+        if(request.json == None):
+            abort(400)
+
         json = request.json
         name = json.get('name')
         gender = json.get('gender')
@@ -320,6 +267,51 @@ def create_app(test_config=None):
             })
         except exc.FlushError:
             abort(422)
+
+    # Function to get management api token
+    # TODO: Improve the payload format.
+    def get_management_token():
+        conn = http.client.HTTPSConnection("casting-agency-bo.us.auth0.com")
+        client_id = 'siwBohtxDLLO1esorYtzYw8R59ESxRwK'
+        client_secret = 'xhOimeIqbX-xa6pEMfmy2VLdquw7yOa3ZzntRSsuSxOJyCjzCK-mmPr3chQg9pwW'
+        audience = 'https://casting-agency-bo.us.auth0.com/api/v2/'
+        grant_type = 'client_credentials'
+        # print(payload)
+        payload = {
+            'client_id': client_id,
+            'client_secret': client_secret,
+            'audience': audience,
+            'grant_type': grant_type
+        }
+
+        headers = {'content-type': "application/json"}
+        conn.request("POST", "/oauth/token", json.dumps(payload), headers)
+        res = conn.getresponse()
+        data = res.read()
+        # Transformin the response into a dictionary.
+        dictionary_data = json.loads(data)
+
+        return dictionary_data['access_token']
+
+    # TODO: add documentation of this api
+    @app.route('/users/<string:id_user>/role')
+    @requires_auth('get:user_role')
+    def get_user_role(jwt, id_user):
+        management_token = get_management_token()
+        conn = http.client.HTTPSConnection("casting-agency-bo.us.auth0.com")
+        headers = {'authorization': "Bearer {token}".format(
+            token=management_token)}
+        conn.request(
+            "GET", "/api/v2/users/{id}/roles".format(id=id_user),
+            headers=headers)
+        res = conn.getresponse()
+        data = res.read()
+
+        dictionary_data = json.loads(data)
+        return jsonify({
+            'success': 'true',
+            'role': dictionary_data[0]['name']
+        })
 
     # Error handling.
     @app.errorhandler(400)
