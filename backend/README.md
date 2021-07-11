@@ -48,6 +48,7 @@ psql casting-agency < casting-agency.pgsql
 ```
 
 ## Roles of the project.
+
 For this project we have three roles and every one have different permissions.
 
 - Casting Assistant
@@ -152,6 +153,7 @@ The API will return the next error types when request fail:
 - GET '/actors/\<int:id>'
 - GET '/movies'
 - GET '/movies/\<int:id>'
+- GET '/users/\<string:id/>/role'
 - POST '/actors'
 - POST'/movies'
 - DELETE '/actors/\<int:id>'
@@ -254,8 +256,6 @@ Example:
 }
 ```
 
-
-
 #### GET '/movies'
 
 - Fetches a a movies and a success value, utilizing a bearer token for authentication.
@@ -301,6 +301,7 @@ Example:
   "success": true
 }
 ```
+
 #### GET '/movies/\<int:id>'
 
 - Fetches a dictionary with a movie with all their related actors and a success value, utilizing a bearer token for authentication.
@@ -350,6 +351,38 @@ Example:
 }
 ```
 
+#### GET '/users/\<string:id_user/>/role'
+
+NOTE: The id_user is the id provided for auth0 when you logged to the app.
+
+- Fetch the role assigned of a user.
+- Request Arguments:
+  - Header authorization bearer token.
+
+Example:
+
+GET 'localhost:5000/google-oauth2|104718474803384280822/role
+
+headers
+
+```JSON
+{
+    "authorization": "Bearer <Token>"
+}
+
+```
+
+- Returns: A json with the next keys:
+  - success: If the petition was success.
+  - role: the role of the user.
+
+Example:
+```JSON
+{
+    "role": "Executive Producer",
+    "success": "true"
+}
+```
 #### POST '/actors'
 
 - Create an actor through json request and bearer token for authentication.
