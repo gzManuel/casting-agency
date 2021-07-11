@@ -67,7 +67,7 @@ def get_token_auth_header():
 
 def verify_decode_jwt(token):
     """ Verify the jwt and decode it with JSON Web Key Sets
-        'https://coffeeshopbo.us.auth0.com/.well-known/jwks.json'
+        'https://casting-agency-bo.us.auth0.com/.well-known/jwks.json'
     Args:
         token (String): token got it by get_token_auth_header function
     Raises:

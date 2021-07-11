@@ -190,7 +190,7 @@ def create_app(test_config=None):
             abort(404)
 
         # Getting json data to update movie.
-        if(request.json == None):
+        if(request.json is None):
             abort(400)
 
         json = request.json
@@ -239,7 +239,7 @@ def create_app(test_config=None):
             abort(404)
 
         # Getting the atributes data to update the actor.
-        if(request.json == None):
+        if(request.json is None):
             abort(400)
 
         json = request.json
@@ -269,7 +269,6 @@ def create_app(test_config=None):
             abort(422)
 
     # Function to get management api token
-    # TODO: Improve the payload format.
     def get_management_token():
         conn = http.client.HTTPSConnection("casting-agency-bo.us.auth0.com")
         client_id = 'siwBohtxDLLO1esorYtzYw8R59ESxRwK'

@@ -53,9 +53,9 @@ For this project we have three roles and every one have different permissions.
 
 - Casting Assistant
   - get:actors
-  <!-- - get:actor -->
+  - get:actor
   - get:movies
-  <!-- - get:movie -->
+  - get:movie
 - Casting Director
   - get:actors
   - get:movies
@@ -75,12 +75,16 @@ For this project we have three roles and every one have different permissions.
 
 ## Running the server
 
-From the source code directory first ensure you're working using your created virtual enviroment.
+From the source code directory first ensure you're working using your created virtual environment.
 
 To run the server, execute:
 
 ```bash
-# To setup the config variables, also you can modify the DATABASE_URL
+# To setup the config variables, also you can modify the: 
+# DATABASE_URL : where is located you're database.
+# AUTH0_DOMAIN : The name of your api. 
+# ALGORITHMS : The kind of algorithm you're utilizing to encode your jwt.
+
 source setup.sh
 python manage.py runserver -r
 ```
