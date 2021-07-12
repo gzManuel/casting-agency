@@ -45,12 +45,13 @@ function useHttp(requestFunction) {
     const [httpState, dispatch] = useReducer(httpReducer, init);
     //Saving the promise response into response variable.
     /**
+     * @param {string} token  The jwt of the logged user.
      * @param x It can be the body or the uri parameter or just empty.
      */
-    const sendRequest = useCallback(async (x) => {
+    const sendRequest = useCallback(async (token,x) => {
         dispatch({ type: 'SEND' });
         try {
-            const responseData = await requestFunction(x);
+            const responseData = await requestFunction(token,x);
             dispatch({ type: 'SUCCESS', responseData });
         } catch (error) {
             dispatch({type:'ERROR',error:error.message||'Something went wrong!'});
