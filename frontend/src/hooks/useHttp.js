@@ -48,10 +48,10 @@ function useHttp(requestFunction) {
      * @param {string} token  The jwt of the logged user.
      * @param x It can be the body or the uri parameter or just empty.
      */
-    const sendRequest = useCallback(async (token,x) => {
+    const sendRequest = useCallback(async (x) => {
         dispatch({ type: 'SEND' });
         try {
-            const responseData = await requestFunction(token,x);
+            const responseData = await requestFunction(x);
             dispatch({ type: 'SUCCESS', responseData });
         } catch (error) {
             dispatch({type:'ERROR',error:error.message||'Something went wrong!'});

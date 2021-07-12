@@ -22,7 +22,7 @@ const ActorsPage = () => {
     }
 
     return (
-        <Actors actors={httpState.data}
+        <Actors actors={httpState.data===null?[]:httpState.data }
             // Updating the loadedActors every time is deleted an actor.
             onFetchActors={sendRequest} />
     );

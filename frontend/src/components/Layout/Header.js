@@ -26,7 +26,7 @@ const Header = () => {
             getAccessTokenSilently().then(token => {
                 localStorage.setItem('token', token);
                 // Get user role
-                sendRequest(token, user.sub);
+                sendRequest(user.sub);
             });
         }
     }, [getAccessTokenSilently, isAuthenticated, sendRequest, user]);

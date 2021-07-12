@@ -15,6 +15,7 @@ import Button from "../UI/Button";
 
 const Actor = ({ actor }) => {
     const headerTable = ['Id', 'Title', 'Release Date', 'Delete'];
+    
     //If isn't an Array means that the actor is empty.
     const bodyTable = (!Array.isArray(actor)) ? actor.movies.map(movie => {
         return ({

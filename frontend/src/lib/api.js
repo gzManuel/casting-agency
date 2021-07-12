@@ -16,10 +16,13 @@ const DOMAIN = 'http://localhost:5000';
 
 /**
  * Http request to get All actors
- * @param {string} token Token of the user
  * @returns {Promise<Actor[]>} All the actors.
  */
-export async function getAllActors(token) {
+/**
+ * Token obtained from the localStorage.
+ */
+const token = localStorage.getItem('token');
+export async function getAllActors() {
     const response = await fetch(`${DOMAIN}/actors`, {
         headers: {
             'Content-Type': 'application/json',
@@ -35,11 +38,10 @@ export async function getAllActors(token) {
 
 /**
  * Http request to get an actor with the given id parameter
- * @param {string} token Token of the user
  * @param  {number} id The id of the actor to get it.
  * @returns {Promise<Actor>} The found actor.
  */
-export async function getActor(token, id) {
+export async function getActor(id) {
     const response = await fetch(`${DOMAIN}/actors/${id}`, {
         headers: {
             'Content-Type': 'application/json',
@@ -54,11 +56,10 @@ export async function getActor(token, id) {
 }
 /**
  * Save an actor in the database.
- * @param {string} token Token of the user
  * @param {Actor} actor
  * @returns {Promise<object>}
  */
-export async function addActor(token, actor) {
+export async function addActor(actor) {
     const response = await fetch(DOMAIN + '/actors',
         {
             method: 'Post',
@@ -78,11 +79,10 @@ export async function addActor(token, actor) {
 
 /**
  * Delete an Actor row in the database with the given id parameter.
- * @param {string} token Token of the user
  * @param  {number} id The id of the actor to delete.
  * @returns {Promise<object>} A promise response information.
  */
-export async function deleteActor(token, id) {
+export async function deleteActor(id) {
     const response = await fetch(DOMAIN + '/actors/' + id, {
         method: 'DELETE',
         headers: {
@@ -99,10 +99,9 @@ export async function deleteActor(token, id) {
 }
 /**
  * Http request to get All movies
- * @param {string} token Token of the user
  * @returns {Promise<Movie[]>} All the movies of the database.
  */
-export async function getAllMovies(token) {
+export async function getAllMovies() {
     const response = await fetch(DOMAIN + '/movies', {
         headers: {
             'Content-Type': 'application/json',
@@ -119,11 +118,10 @@ export async function getAllMovies(token) {
 
 /**
  * Http request to get a movie with the given id parameter
- * @param {string} token Token of the user
  * @param  {number} id The id of the movie to get it.
  * @returns {Promise<Movie>} The movie.
  */
-export async function getMovie(token, id) {
+export async function getMovie(id) {
     const response = await fetch(`${DOMAIN}/movies/${id}`, {
         headers: {
             'Content-Type': 'application/json',
@@ -139,11 +137,10 @@ export async function getMovie(token, id) {
 }
 /**
  * Delete an Movie row in the database with the given id parameter.
- * @param {string} token Token of the user
  * @param  {number} id The id of the movie to delete.
  * @returns {Promise<object>} A promise response information.
  */
-export async function deleteMovie(token, id) {
+export async function deleteMovie(id) {
     const response = await fetch(DOMAIN + '/movies/' + id, {
         method: 'DELETE',
         headers: {
@@ -161,11 +158,10 @@ export async function deleteMovie(token, id) {
 
 /**
  * Save a movie in the database.
- * @param {string} token Token of the user
  * @param {Movie} movie. The movie to save.
  * @returns {Promise<Object>} The response.
  */
-export async function addMovie(token, movie) {
+export async function addMovie(movie) {
     const response = await fetch(`${DOMAIN}/movies`, {
         method: 'POST',
         headers: {
@@ -184,11 +180,10 @@ export async function addMovie(token, movie) {
 
 /**
  * get rol from a user.
- * @param {string} token Token of the user 
  * @param {string} id_user the id of the user
  * @returns {Promise<Object>} The response.
  */
-export async function getUserRole(token, id_user) {
+export async function getUserRole(id_user) {
     const response = await fetch(`${DOMAIN}/users/${id_user}/role`,
         {
             headers: {

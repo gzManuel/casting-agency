@@ -34,7 +34,7 @@ const Actors = ({actors, onFetchActors}) => {
             //This is the button that will delete a row of actors.
             column4: <Button
                 onClick={() => {
-                    sendRequest(actor.id).then(() => onFetchActors());
+                    sendRequest(actor.id).then(() => onFetchActors(localStorage.getItem('token')));
                 }}> Delete </Button>
         });
     });
