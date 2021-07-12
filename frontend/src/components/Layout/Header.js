@@ -21,24 +21,24 @@ const Header = () => {
     // Setting token in localstorage and execute getUserRole request.
     useEffect(() => {
         // If There's not "token" in local storage and is authenticated 
-        if (isSetInLocalStorage('token') && isAuthenticated) {
+        if (!isSetInLocalStorage('token') && isAuthenticated) {
             // Get token and save in to local storage.
             getAccessTokenSilently().then(token => {
                 localStorage.setItem('token', token);
+                // Get user role
+                sendRequest(token, user.sub);
             });
-            // Get user role
-            sendRequest(user.sub);
         }
     }, [getAccessTokenSilently, isAuthenticated, sendRequest, user]);
 
     // Check if an item is set in localStorage.
     const isSetInLocalStorage = (item) => {
-        return localStorage.getItem(item) === null;
+        return localStorage.getItem(item) !== null;
     }
 
     // Set rol in local storage to avoid request when the page is refreshed.
     // if the status is completed and the local storage don't have the role item.
-    if (httpState.status === 'completed' && isSetInLocalStorage('role')) {
+    if (httpState.status === 'completed' && !isSetInLocalStorage('role')) {
         localStorage.setItem('role', httpState.data.role);
     }
 
@@ -49,8 +49,9 @@ const Header = () => {
 
     //isLoading == the user information is not loaded from auth0;
     //isAuthenticated == if the user is authenticated;
-    // Show the Spinner, if the information is not loaded, or if is Authenticated and localStorage.getItem('role') === null
-    if (isLoading || (isAuthenticated && isSetInLocalStorage('role'))) {
+    // Show the Spinner, if the user information is not loading, or if is Authenticated and isn't set in localStorage role
+
+    if (isLoading || (isAuthenticated && !isSetInLocalStorage('role'))) {
         return <Spinner />
     }
 
