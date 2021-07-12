@@ -21,12 +21,13 @@ const DOMAIN = 'http://localhost:5000';
 /**
  * Token obtained from the localStorage.
  */
-const token = localStorage.getItem('token');
+const getToken =()=> localStorage.getItem('token');
+
 export async function getAllActors() {
     const response = await fetch(`${DOMAIN}/actors`, {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
+            'Authorization': 'Bearer ' + getToken()
         }
     });
     const jsonResponse = await response.json();
@@ -45,7 +46,7 @@ export async function getActor(id) {
     const response = await fetch(`${DOMAIN}/actors/${id}`, {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
+            'Authorization': 'Bearer ' + getToken()
         }
     });
     const jsonResponse = await response.json();
@@ -65,7 +66,7 @@ export async function addActor(actor) {
             method: 'Post',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
+                'Authorization': 'Bearer ' + getToken()
             },
             body: JSON.stringify(actor)
         });
@@ -87,7 +88,7 @@ export async function deleteActor(id) {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
+            'Authorization': 'Bearer ' + getToken()
         }
     });
     const jsonResponse = await response.json();
@@ -105,7 +106,7 @@ export async function getAllMovies() {
     const response = await fetch(DOMAIN + '/movies', {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
+            'Authorization': 'Bearer ' + getToken()
         }
     });
     const jsonResponse = await response.json();
@@ -125,7 +126,7 @@ export async function getMovie(id) {
     const response = await fetch(`${DOMAIN}/movies/${id}`, {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
+            'Authorization': 'Bearer ' + getToken()
         }
     });
     const jsonResponse = await response.json();
@@ -145,7 +146,7 @@ export async function deleteMovie(id) {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
+            'Authorization': 'Bearer ' + getToken()
         }
     });
     const jsonResponse = await response.json();
@@ -166,7 +167,7 @@ export async function addMovie(movie) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
+            'Authorization': 'Bearer ' + getToken()
         },
         body: JSON.stringify(movie)
     });
@@ -188,7 +189,7 @@ export async function getUserRole(id_user) {
         {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
+                'Authorization': 'Bearer ' + getToken()
             }
         }
     );
