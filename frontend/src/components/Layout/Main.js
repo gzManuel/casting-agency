@@ -7,11 +7,9 @@ import './Main.css';
 const Main = (props) => {
     return (
         <div className='wrapper'>
-            <h1 className='main__welcome'>User You're welcome</h1>
+            <h1 className='main__welcome'>{props.title}</h1>
             <main className='main'>
-                
                 {props.children}
-
             </main>
         </div>
     );
