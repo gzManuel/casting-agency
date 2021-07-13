@@ -18,7 +18,7 @@ import { verifyPermission } from '../../lib/aux';
  * @returns Actors component
  */
 
-const Actors = ({actors, onFetchActors}) => {
+const Actors = ({ actors, onFetchActors }) => {
     //Shows the actor form.
     const [showForm, setShowForm] = useState(false);
     //The function to delete the actor.
@@ -27,10 +27,13 @@ const Actors = ({actors, onFetchActors}) => {
 
     // Can delete de user?
     const canDelete = verifyPermission('delete:Actor');
+    console.log(canDelete);
     // Adding to table Header if can delete.
-    if(canDelete){
+    if (canDelete) {
         tableHeader.push('Delete')
     }
+    const canCreate = verifyPermission('post:actor');
+    console.log(canCreate);
 
     // Transform all the attributes of the actors into an array of objects with columns key.
     // Each column represents every column in the table.
@@ -40,17 +43,19 @@ const Actors = ({actors, onFetchActors}) => {
             column2: actor.name,
             column3: actor.gender,
             //This is the button that will delete a row of actors, is hidden if the user don't have the permissions.
-            ...(canDelete&&{column4: <Button hidden={canDelete}
-                onClick={() => {
-                    sendRequest(actor.id).then(() => onFetchActors(localStorage.getItem('token')));
-                }}> Delete </Button>} )
+            ...(canDelete && {
+                column4: <Button hidden={!canDelete}
+                    onClick={() => {
+                        sendRequest(actor.id).then(() => onFetchActors(localStorage.getItem('token')));
+                    }}> Delete </Button>
+            })
         });
     });
 
     return (
         <div className={classes.wrapperActor}>
             <label >Double click to select your actor</label><br />
-            <Button style={{ backgroundColor: 'rgb(24, 26, 27)' }}
+            <Button hidden={!canCreate} style={{ backgroundColor: 'rgb(24, 26, 27)' }}
                 onClick={() => { setShowForm(true) }}>Add actor</Button>
             {/* The modal to show the actor form. */}
             <Modal show={showForm}

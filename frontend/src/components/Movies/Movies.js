@@ -25,6 +25,8 @@ const Movies = ({ onFetchMovies, movies }) => {
 
     const canDelete = verifyPermission('delete:movie')
 
+    const canCreate = verifyPermission('post:movie');
+
     if (canDelete) {
         tableHeader.push('Delete');
     }
@@ -46,7 +48,7 @@ const Movies = ({ onFetchMovies, movies }) => {
     return (
         <div className={classes.wrapperMovie}>
             <label>Double click to select your movie</label><br />
-            <Button onClick={() => setShowForm(true)} >Add Movie</Button>
+            <Button hidden={!canCreate} onClick={() => setShowForm(true)} >Add Movie</Button>
             {/* The modal to show the Movie Form. */}
             <Modal show={showForm}
                 title='Add Movie'
