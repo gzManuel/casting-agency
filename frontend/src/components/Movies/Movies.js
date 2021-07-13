@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import useHttp from '../../hooks/useHttp';
 import { deleteMovie } from '../../lib/api';
+import { verifyPermission } from '../../lib/aux';
 
 import classes from './Movies.module.css';
 import Table from '../UI/Table';
@@ -20,7 +21,13 @@ const Movies = ({ onFetchMovies, movies }) => {
     //To show the form FormMovie.
     const [showForm, setShowForm] = useState(false);
     const { sendRequest } = useHttp(deleteMovie);
-    const tableHeader = ['Id', 'Title', 'Release Date', 'Delete'];
+    const tableHeader = ['Id', 'Title', 'Release Date'];
+
+    const canDelete = verifyPermission('delete:movie')
+
+    if (canDelete) {
+        tableHeader.push('Delete');
+    }
 
     const tableBody = movies.map(movie => {
         return ({
@@ -28,12 +35,13 @@ const Movies = ({ onFetchMovies, movies }) => {
             column2: movie.title,
             column3: movie.release_date,
             //The button that delete a Movie.
-            column4: <Button
-                onClick={() => {
-                    sendRequest(movie.id).then(() => onFetchMovies());
-                }}> Delete </Button>
+            ...(canDelete && {
+                column4: <Button
+                    onClick={() => {
+                        sendRequest(movie.id).then(() => onFetchMovies());
+                    }}> Delete </Button>
+            })
         });
-
     });
     return (
         <div className={classes.wrapperMovie}>

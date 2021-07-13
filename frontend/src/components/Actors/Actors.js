@@ -8,6 +8,7 @@ import Table from '../UI/Table';
 import Modal from '../UI/Modal';
 import FormActor from './FormActor';
 import Button from '../UI/Button';
+import { verifyPermission } from '../../lib/aux';
 
 /**
  * This component show actors into a table.
@@ -22,20 +23,27 @@ const Actors = ({actors, onFetchActors}) => {
     const [showForm, setShowForm] = useState(false);
     //The function to delete the actor.
     const { sendRequest } = useHttp(deleteActor);
-    const tableHeader = ['Id', 'Name', 'Gender', 'Delete'];
+    const tableHeader = ['Id', 'Name', 'Gender'];
 
-    //Transform all the attributes of the actors into an array of objects with columns key.
-    //Each column represents every column in the table.
+    // Can delete de user?
+    const canDelete = verifyPermission('delete:Actor');
+    // Adding to table Header if can delete.
+    if(canDelete){
+        tableHeader.push('Delete')
+    }
+
+    // Transform all the attributes of the actors into an array of objects with columns key.
+    // Each column represents every column in the table.
     const tableBody = actors.map(actor => {
         return ({
             column1: actor.id,
             column2: actor.name,
             column3: actor.gender,
-            //This is the button that will delete a row of actors.
-            column4: <Button
+            //This is the button that will delete a row of actors, is hidden if the user don't have the permissions.
+            ...(canDelete&&{column4: <Button hidden={canDelete}
                 onClick={() => {
                     sendRequest(actor.id).then(() => onFetchActors(localStorage.getItem('token')));
-                }}> Delete </Button>
+                }}> Delete </Button>} )
         });
     });
 
