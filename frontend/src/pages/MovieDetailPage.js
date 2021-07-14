@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
 import Movie from '../components/Movies/Movie';
 import useHttp from '../hooks/useHttp';
 import { getMovie } from '../lib/api';
@@ -12,11 +13,13 @@ const MovieDetailPage = () => {
     const { movieId } = useParams();
     const { httpState, sendRequest } = useHttp(getMovie);
 
+    // Get the movie.
     useEffect(() => {
         sendRequest(movieId);
     }, [sendRequest, movieId]);
 
-    if (httpState.status === 'pending' || httpState.status === 'not send') {
+    // Shows spinners if the status is not completed
+    if (httpState.status !=='completed') {
         return <Spinner />
     }
     

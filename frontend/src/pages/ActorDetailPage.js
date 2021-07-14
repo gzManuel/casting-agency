@@ -17,7 +17,8 @@ const ActorDetail = () => {
         sendRequest(actorId)
     }, [actorId, sendRequest]);
 
-    if (httpState.status==='not send'||httpState.status==='pending'){
+    //Checking the status, if is not completed show the Spinner.
+    if (httpState.status !=='completed') {
         return <Spinner/>
     }
 

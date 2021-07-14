@@ -29,7 +29,7 @@ const Header = () => {
                 picture={user.picture}
                 role={localStorage.getItem('role')} />)}
 
-            <div className='item'>authenticated
+            <div className='item'>
                 {/* If is authenticated show information of the user */}
                 {isAuthenticated ? <button onClick={logoutHandler} className='item__logout'>Logout</button> :
                     <button onClick={loginWithRedirect} className='item__login'>Login</button>}

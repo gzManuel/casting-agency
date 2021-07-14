@@ -16,8 +16,8 @@ const ActorsPage = () => {
     useEffect(() => {
         sendRequest();
     }, [sendRequest]);
-    //Checking the status, is is not send or pending will show the Spinner.
-    if (httpState.status === 'pending' || httpState.status === 'not send') {
+    //Checking the status, if is not completed show the Spinner.
+    if (httpState.status !=='completed') {
         return <Spinner />
     }
 

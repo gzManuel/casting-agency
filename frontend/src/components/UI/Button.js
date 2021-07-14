@@ -3,10 +3,10 @@ import './Button.css'
 /**
  * An stylized button component.
  */
-const Button = (props) => {
+const Button = ({hidden, onClick, children}) => {
     return (
-        <button hidden={props.hidden} className='button' onClick={props.onClick}>
-            {props.children}
+        <button hidden={hidden} className='button' onClick={onClick}>
+            {children}
         </button>
     );
 };

@@ -9,19 +9,22 @@ const DOMAIN = 'http://localhost:5000';
 
 /**
  * @typedef {object} Movie
+ * @property {number} id
  * @property {string} title
  * @property {Date} release_date
  * @property {Actor[]} actors
  */
 
-/**
- * Http request to get All actors
- * @returns {Promise<Actor[]>} All the actors.
- */
+
 /**
  * Token obtained from the localStorage.
  */
 const getToken =()=> localStorage.getItem('token');
+
+/**
+ * Http request to get All actors
+ * @returns {Promise<Actor[]>} All the actors.
+ */
 
 export async function getAllActors() {
     const response = await fetch(`${DOMAIN}/actors`, {

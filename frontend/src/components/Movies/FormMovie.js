@@ -26,11 +26,6 @@ const FormMovie = ({ fetchMovies, onCancelForm }) => {
             title,
             release_date: releaseDate
         }
-        // sendRequest(movie).then(()=>{
-        //     setTitle('');
-        //     setReleaseDate('');
-        //     fetchMovies();
-        // });
         await sendRequest(movie);
         setTitle('');
         setReleaseDate('');

@@ -5,11 +5,8 @@ import Table from "../UI/Table";
 import Button from "../UI/Button";
 
 /**
- * @todo Return error if isn't found an actor with the given id.
- * @todo Change the returns documentation.
- * 
  * This component show information of a single actor.
- * @param {{actor:import('../../lib/api').Actor}} props with the actor information to show.
+ * @param {{actor:import('../../lib/api').Actor}} actor with the actor information to show.
  * @returns An Actor component.
  */
 

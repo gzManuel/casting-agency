@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 
 import Movies from "../components/Movies/Movies";
+import Spinner from '../components/UI/Spinner';
 
 import { getAllMovies } from '../lib/api';
 import useHttp from "../hooks/useHttp";
-import Spinner from '../components/UI/Spinner';
 
 /**
  * This component renders Movies, get and fill it with movies.
@@ -17,7 +17,7 @@ const MoviesPage = () => {
         sendRequest();
     }, [sendRequest])
 
-    if (httpState.status === 'pending' || httpState.status === 'not send') {
+    if (httpState.status !=='completed') {
         return <Spinner />
     }
 
