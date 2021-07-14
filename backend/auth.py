@@ -81,7 +81,7 @@ def verify_decode_jwt(token):
     """
     url = 'https://casting-agency-bo.us.auth0.com/.well-known/jwks.json'
 
-    jsonurl = urlopen(url, timeout=1)
+    jsonurl = urlopen(url)
 
     jwks = json.loads(jsonurl.read())
 
