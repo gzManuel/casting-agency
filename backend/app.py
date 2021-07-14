@@ -270,6 +270,7 @@ def create_app(test_config=None):
 
     # Function to get management api token
     def get_management_token():
+        # TODO This variables have to be obtained by enviroment variables.
         conn = http.client.HTTPSConnection("casting-agency-bo.us.auth0.com")
         client_id = 'siwBohtxDLLO1esorYtzYw8R59ESxRwK'
         client_secret = 'xhOimeIqbX-xa6pEMfmy2VLdquw7yOa3ZzntRSsuSxOJyCjzCK-mmPr3chQg9pwW'
@@ -292,7 +293,6 @@ def create_app(test_config=None):
 
         return dictionary_data['access_token']
 
-    # TODO: add documentation of this api
     @app.route('/users/<string:id_user>/role')
     @requires_auth('get:user_role')
     def get_user_role(jwt, id_user):
